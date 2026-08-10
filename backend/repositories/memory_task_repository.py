@@ -4,7 +4,8 @@ from __future__ import annotations
 from datetime import datetime
 
 from .task_repository import TaskRepository
-from .model import Task
+from backend.models import Task
+
 
 class InMemoryTaskRepository(TaskRepository):
     def __init__(self):
