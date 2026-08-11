@@ -4,14 +4,14 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from ..models import UserBase
+from ..models import User
 from ..dependencies import get_current_active_user
 
 router = APIRouter()
 
 
 @router.get("/users/")
-def read_user(current_user: Annotated[UserBase, Depends(get_current_active_user)]):
+def read_user(current_user: Annotated[User, Depends(get_current_active_user)]):
     """Read a user.
 
     The function checks whether a user exists in the database and evaluates

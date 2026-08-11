@@ -3,6 +3,8 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
+from ..models import Task, TaskCreate
+
 
 class TaskRepository(ABC):
     """Define the persistence operations available for task items.
@@ -35,7 +37,19 @@ class TaskRepository(ABC):
         ...
 
     @abstractmethod
-    def create_task(self, task: TaskBase) -> Task:
+    def get_tasks_by_list_id(self, list_id: int) -> list[Task]:
+        """Retrieve all tasks from a particular task list.
+
+        Args:
+            list_id: Unique identifier of the task list.
+
+        Returns:
+            The matching tasks, or None if no task with the given ID exists.
+        """
+        ...
+
+    @abstractmethod
+    def create_task(self, task: TaskCreate) -> Task:
         """Store a new task.
 
         Args:

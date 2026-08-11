@@ -1,14 +1,17 @@
 """Models module."""
 
-from .task import TaskBase, Task
-from .token import Token, TokenData
-from .user import UserBase, User
+from .task import Task, TaskCreate
+from .task_list import TaskList, TaskListCreate
+from .token import TokenData, Token
+from .user import User, UserCreate
 
 __all__ = [
-    "TaskBase",
     "Task",
+    "TaskCreate",
+    "TaskList",
+    "TaskListCreate",
     "Token",
     "TokenData",
-    "UserBase",
-    "User"
+    "User",
+    "UserCreate",
 ]

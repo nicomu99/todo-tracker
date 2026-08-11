@@ -2,17 +2,23 @@
 
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveInt
 
 
-class TaskBase(BaseModel):
+class Task(BaseModel):
+    id: int
+    task_list_id: int
     name: str
-    description: str
-    priority: int
-    effort: float
-
-
-class Task(TaskBase):
-    task_id: int
+    description: str | None
+    priority: PositiveInt = 0
+    effort: float = 0
     completed: bool
     created_at: datetime
+
+
+class TaskCreate(BaseModel):
+    task_list_id: int
+    name: str
+    description: str | None
+    priority: PositiveInt = 0
+    effort: float = 0

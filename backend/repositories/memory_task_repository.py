@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from .task_repository import TaskRepository
-from ..models import Task, TaskBase
+from ..models import Task, TaskCreate
 
 
 class InMemoryTaskRepository(TaskRepository):
@@ -11,7 +11,8 @@ class InMemoryTaskRepository(TaskRepository):
         self.next_task_id = 1
         self.tasks: dict[int, Task] = {
             0: Task(**{
-                "task_id": 0,
+                "id": 0,
+                "task_list_id": 0,
                 "name": "Groceries",
                 "description": "Tomatoes, Peaches",
                 "priority": 2,
@@ -29,10 +30,15 @@ class InMemoryTaskRepository(TaskRepository):
             return self.tasks[task_id]
         return None
 
-    def create_task(self, task: TaskBase) -> Task:
+    def get_tasks_by_list_id(self, list_id: int) -> list[Task]:
+        tasks = [task for task in self.tasks.values() if task.task_list_id == list_id]
+        return tasks
+
+    def create_task(self, task: TaskCreate) -> Task:
         new_task_id = self.next_task_id
         new_task = Task(
-            task_id=new_task_id,
+            id=new_task_id,
+            task_list_id=task.task_list_id,
             name=task.name,
             description=task.description,
             priority=task.priority,

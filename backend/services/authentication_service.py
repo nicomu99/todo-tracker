@@ -23,7 +23,7 @@ class AuthenticationService:
         self.password_hash = PasswordHash.recommended()
         self.user_repository = user_repository
 
-        self.dummy_hash = password_hash.hash("dummypassword")
+        self.dummy_hash = self.password_hash.hash("dummypassword")
         self.secret_key = "781c0e1e43eec148e05253b6941f2a8fe46b2d5ba40a163e6a9f422851f7d059"
         self.algorithm = "HS256"
 

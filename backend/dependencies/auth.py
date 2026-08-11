@@ -7,14 +7,21 @@ from fastapi.security import OAuth2PasswordBearer
 
 
 from ..models import User
+from ..repositories import TaskRepository, InMemoryTaskRepository
 from ..repositories import UserRepository, InMemoryUserRepository
-from ..services import AuthenticationService, UserService
+from ..repositories import TaskListRepository, InMemoryTaskListRepository
+from ..services import AuthenticationService, TaskService, UserService
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
+# TODO: Move these to its own file
+task_repository: TaskRepository = InMemoryTaskRepository()
 user_repository: UserRepository = InMemoryUserRepository()
+task_list_repository: TaskListRepository = InMemoryTaskListRepository()
 
 authentication_service_instance = AuthenticationService(user_repository)
+task_service_instance = TaskService(task_repository, task_list_repository)
 user_service_instance = UserService(user_repository)
 
 
@@ -34,6 +41,15 @@ def get_user_service() -> UserService:
         User service instance.
     """
     return user_service_instance
+
+
+def get_task_service() -> TaskService:
+    """Get the task service.
+
+    Returns:
+        Task service instance.
+    """
+    return task_service_instance
 
 
 def get_current_user(
