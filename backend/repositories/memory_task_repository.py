@@ -1,16 +1,27 @@
 """An in-memory task repository."""
+
 from __future__ import annotations
 
 from datetime import datetime
 
 from .task_repository import TaskRepository
-from backend.models import Task
+from ..models import Task
 
 
 class InMemoryTaskRepository(TaskRepository):
     def __init__(self):
-        self.next_task_id = 0
-        self.tasks: dict[int, Task] = dict()
+        self.next_task_id = 1
+        self.tasks: dict[int, Task] = {
+            0: Task(**{
+                "task_id": 0,
+                "name": "Groceries",
+                "description": "Tomatoes, Peaches",
+                "priority": 2,
+                "effort": 2,
+                "completed": False,
+                "created_at": datetime.now()
+            })
+        }
 
     def get_tasks(self) -> list[Task]:
         return list(self.tasks.copy().values())

@@ -1,19 +1,20 @@
 """Main entry point."""
-from __future__ import annotations
+from fastapi import FastAPI
 
-from fastapi import FastAPI, HTTPException, Response, status
+from .routers import tasks, tokens, users
 
-from .app import Task, TaskCreate
-from .app import InMemoryTaskRepository
+
+app = FastAPI()
+app.include_router(tasks.router)
+app.include_router(users.router)
+app.include_router(tokens.router)
 
 # Very simple database: We have task lists, tasks and users
 # A user can have multiple lists, each list can have multiple tasks
 
-app = FastAPI()
-
 # TODO: Figure out user authentication DO LATER
 # TODO: Create little database
-task_repository = InMemoryTaskRepository()
+
 
 @app.get("/")
 def read_root():
@@ -23,101 +24,3 @@ def read_root():
         A dictionary indicating that the connection is working.
     """
     return {"connection": True}
-
-@app.get("/tasks")
-def read_tasks() -> list[Task]:
-    """Return all tasks.
-
-    Returns:
-        A list containing all stored tasks.
-    """
-    return task_repository.get_tasks()
-
-@app.get("/tasks/{task_id}")
-def read_task(task_id: int):
-    """Return a task by ID.
-
-    Args:
-        task_id: The ID of the task to retrieve.
-
-    Returns:
-        The task with the given ID.
-
-    Raises:
-        HTTPException: If no task with the given ID exists.
-    """
-    task = task_repository.get_task(task_id)
-    if task is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
-    return task
-
-@app.post("/tasks/")
-def create_task(task: TaskCreate):
-    """Create a new task.
-
-    Args:
-        task: The data for the task to create.
-
-    Returns:
-        The newly created task.
-    """
-    return task_repository.create_task(task)
-
-@app.put("/tasks/{task_id}")
-def update_task(
-    task_id: int,
-    *,
-    name: str | None = None,
-    description: str | None = None,
-    priority: int | None = None,
-    effort: float | None = None,
-    completed: bool | None = None,
-):
-    """Update an existing task.
-
-    Only values that are provided are passed to the repository for updating.
-
-    Args:
-        task_id: The ID of the task to update.
-        name: The new task name.
-        description: The new task description.
-        priority: The new task priority.
-        effort: The new estimated effort.
-        completed: The new completion status.
-
-    Returns:
-        The updated task.
-
-    Raises:
-        HTTPException: If no task with the given ID exists.
-    """
-    task = task_repository.update_task(
-        task_id,
-        name=name,
-        description=description,
-        priority=priority,
-        effort=effort,
-        completed=completed
-    )
-
-    if task is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
-    return task
-
-@app.delete("/tasks/{task_id}")
-def delete_task(task_id: int):
-    """Delete a task by ID.
-
-    Args:
-        task_id: The ID of the task to delete.
-
-    Returns:
-        An empty HTTP response with status code 204.
-
-    Raises:
-        HTTPException: If no task with the given ID exists.
-    """
-    task_deleted = task_repository.delete_task(task_id)
-    if not task_deleted:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
