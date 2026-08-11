@@ -1,12 +1,24 @@
-from ..repositories import InMemoryUserRepository
+"""User service."""
+
 from ..models import UserInDB
+from ..repositories import UserRepository
 
 
 class UserService:
-    def __init__(self):
-        self.repository = InMemoryUserRepository()
+    """Service for handling CRUD operations related to users."""
+
+    def __init__(self, user_repository: UserRepository):
+        self.user_repository = user_repository
 
     def get_user(self, username: str | None) -> UserInDB | None:
+        """Retrieve a user by username.
+
+        Args:
+            username: The username of the user to retrieve.
+
+        Returns:
+            A user object if it exists, otherwise None.
+        """
         if username is None:
             return None
         return self.repository.get_user(username)

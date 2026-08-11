@@ -12,7 +12,10 @@ app.include_router(tokens.router)
 # Very simple database: We have task lists, tasks and users
 # A user can have multiple lists, each list can have multiple tasks
 
-# TODO: Figure out user authentication DO LATER
+# TODO: Rename user and token types (if necessary)
+# TODO: Hide all endpoints behind authentication
+# TODO: Create todo list per user
+# TODO: Create getter dependencies for services
 # TODO: Create little database
 
 
