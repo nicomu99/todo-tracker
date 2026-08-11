@@ -14,8 +14,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 user_repository: UserRepository = InMemoryUserRepository()
 
-authentication_service = AuthenticationService(user_repository)
-user_service = UserService(user_repository)
+authentication_service_instance = AuthenticationService(user_repository)
+user_service_instance = UserService(user_repository)
 
 
 def get_auth_service() -> AuthenticationService:
@@ -24,7 +24,16 @@ def get_auth_service() -> AuthenticationService:
     Returns:
         Authentication service instance.
     """
-    return authentication_service
+    return authentication_service_instance
+
+
+def get_user_service() -> UserService:
+    """Get the user service.
+
+    Returns:
+        User service instance.
+    """
+    return user_service_instance
 
 
 def get_current_user(

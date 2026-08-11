@@ -14,7 +14,6 @@ app.include_router(tokens.router)
 
 # TODO: Hide all endpoints behind authentication
 # TODO: Create todo list per user
-# TODO: Create getter dependencies for services
 # TODO: Create little database
 
 
