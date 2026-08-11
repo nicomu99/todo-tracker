@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Response, HTTPException, status
 
 from ..repositories import InMemoryTaskRepository
-from ..models import Task, TaskCreate
+from ..models import Task, TaskBase
 
 router = APIRouter()
 
@@ -40,7 +40,7 @@ def read_task(task_id: int):
 
 
 @router.post("/tasks/")
-def create_task(task: TaskCreate):
+def create_task(task: TaskBase):
     """Create a new task.
 
     Args:

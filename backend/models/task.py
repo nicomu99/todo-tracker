@@ -5,18 +5,14 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class TaskCreate(BaseModel):
+class TaskBase(BaseModel):
     name: str
     description: str
     priority: int
     effort: float
 
 
-class Task(BaseModel):
+class Task(TaskBase):
     task_id: int
-    name: str
-    description: str
-    priority: int
-    effort: float
     completed: bool
     created_at: datetime

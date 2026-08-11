@@ -1,11 +1,9 @@
 """An in-memory task repository."""
 
-from __future__ import annotations
-
 from datetime import datetime
 
 from .task_repository import TaskRepository
-from ..models import Task
+from ..models import Task, TaskBase
 
 
 class InMemoryTaskRepository(TaskRepository):
@@ -31,7 +29,7 @@ class InMemoryTaskRepository(TaskRepository):
             return self.tasks[task_id]
         return None
 
-    def create_task(self, task: TaskCreate) -> Task:
+    def create_task(self, task: TaskBase) -> Task:
         new_task_id = self.next_task_id
         new_task = Task(
             task_id=new_task_id,

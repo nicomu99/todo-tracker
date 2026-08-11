@@ -35,7 +35,7 @@ class TaskRepository(ABC):
         ...
 
     @abstractmethod
-    def create_task(self, task: TaskCreate) -> Task:
+    def create_task(self, task: TaskBase) -> Task:
         """Store a new task.
 
         Args:

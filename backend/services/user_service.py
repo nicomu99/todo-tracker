@@ -1,6 +1,6 @@
 """User service."""
 
-from ..models import UserInDB
+from ..models import User
 from ..repositories import UserRepository
 
 
@@ -10,7 +10,7 @@ class UserService:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    def get_user(self, username: str | None) -> UserInDB | None:
+    def get_user(self, username: str | None) -> User | None:
         """Retrieve a user by username.
 
         Args:

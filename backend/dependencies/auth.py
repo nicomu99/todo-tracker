@@ -6,7 +6,7 @@ from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
 
 
-from ..models import UserInDB
+from ..models import User
 from ..repositories import UserRepository, InMemoryUserRepository
 from ..services import AuthenticationService, UserService
 
@@ -30,7 +30,7 @@ def get_auth_service() -> AuthenticationService:
 def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
     auth_service: Annotated[AuthenticationService, Depends(get_auth_service)]
-) -> UserInDB | None:
+) -> User | None:
     """Get the current user.
 
     Decodes the JWT token and returns the user object if it exists.
@@ -53,8 +53,8 @@ def get_current_user(
 
 
 def get_current_active_user(
-    current_user: Annotated[UserInDB, Depends(get_current_user)]
-) -> UserInDB:
+    current_user: Annotated[User, Depends(get_current_user)]
+) -> User:
     """Get the current active user.
 
     Returns the user object if the user is active.

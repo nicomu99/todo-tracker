@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from .user_repository import UserRepository
-from ..models import User, UserInDB
+from ..models import UserBase, User
 
 
 class InMemoryUserRepository(UserRepository):
     def __init__(self) -> None:
-        self.users: dict[str, UserInDB] = {
-            "johndoe": UserInDB(**{
+        self.users: dict[str, User] = {
+            "johndoe": User(**{
                 "username": "johndoe",
                 "full_name": "John Doe",
                 "email": "johndoe@example.com",
@@ -19,12 +19,12 @@ class InMemoryUserRepository(UserRepository):
             })
         }
 
-    def get_user(self, username: str) -> UserInDB | None:
+    def get_user(self, username: str) -> User | None:
         if username in self.users:
             return self.users[username]
         return None
 
-    def create_user(self, user: User) -> UserInDB | None:
+    def create_user(self, user: UserBase) -> User | None:
         # TODO hash password
         if user.username in self.users:
             return None
