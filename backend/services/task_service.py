@@ -1,7 +1,7 @@
 """Task service."""
 from ..models import Task, TaskCreate
 from ..repositories import TaskRepository, TaskListRepository
-from ..utils import TaskListNotFoundError, TaskNotFoundError, InvalidUserError
+from ..utils import TaskListNotFoundError, TaskNotFoundError, ForbiddenError
 
 
 class TaskService:
@@ -41,17 +41,17 @@ class TaskService:
 
         Returns:
             All tasks associated with the given task list. Returns an empty
-            list if the task list contains not tasks.
+            list if the task list contains no tasks.
 
         Raises:
-            InvalidUserError: If the user is not authorized to access this task.
-            TaskListNotFoundError: If the task list with the given id does not exist.
+            ForbiddenError: If the user is not authorized to access this task.
+            TaskListNotFoundError: If the task list with the given ID does not exist.
         """
         task_list = self.task_list_repository.get_list_by_id(list_id)
         if task_list is None:
             raise TaskListNotFoundError("Task list not found.")
         if task_list.user_id != user_id:
-            raise InvalidUserError("User is not authorized to access this task.")
+            raise ForbiddenError("User is not authorized to access this task.")
         tasks = self.task_repository.get_tasks_by_list_id(list_id)
         return tasks
 

@@ -1,9 +1,9 @@
 """Utilities module."""
 
-from .exceptions import TaskListNotFoundError, TaskNotFoundError, InvalidUserError
+from .exceptions import TaskListNotFoundError, TaskNotFoundError, ForbiddenError
 
 __all__ = [
     "TaskListNotFoundError",
     "TaskNotFoundError",
-    "InvalidUserError"
+    "ForbiddenError"
 ]

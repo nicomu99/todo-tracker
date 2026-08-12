@@ -7,7 +7,7 @@ from fastapi import APIRouter, Response, HTTPException, status, Depends
 from ..dependencies import get_task_service, get_current_active_user
 from ..models import Task, TaskCreate, User
 from ..services import TaskService
-from ..utils import TaskListNotFoundError, TaskNotFoundError, InvalidUserError
+from ..utils import TaskListNotFoundError, TaskNotFoundError, ForbiddenError
 
 router = APIRouter()
 
@@ -69,7 +69,7 @@ def read_task_list(
         return tasks
     except TaskListNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task list not found")
-    except InvalidUserError:
+    except ForbiddenError:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="User not authorized to access this list")
 
 

@@ -10,5 +10,5 @@ class TaskNotFoundError(Exception):
     """Raised when a requested task does not exist."""
 
 
-class InvalidUserError(Exception):
+class ForbiddenError(Exception):
     """Raised when a user is not authorized to access an object."""
