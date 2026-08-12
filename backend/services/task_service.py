@@ -205,6 +205,8 @@ class TaskService:
         """
         self._get_owned_task_list(list_id, user_id)
         new_task_list = self.task_list_repository.update_task_list(list_id, task_list_update)
+        if new_task_list is None:
+            raise TaskListNotFoundError(list_id)
         return new_task_list
 
     def delete_task_list(self, list_id: int, user_id: int) -> None:
