@@ -16,3 +16,8 @@ class TaskList(BaseModel):
 class TaskListCreate(BaseModel):
     name: str
     description: str
+
+
+class TaskListUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
