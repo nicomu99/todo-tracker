@@ -3,7 +3,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-from ..models import Task, TaskCreate
+from ..models import Task, TaskCreate, TaskUpdate
 
 
 class TaskRepository(ABC):
@@ -65,12 +65,7 @@ class TaskRepository(ABC):
     def update_task(
         self,
         task_id: int,
-        *,
-        name: str | None = None,
-        description: str | None = None,
-        priority: int | None = None,
-        effort: float | None = None,
-        completed: bool | None = None,
+        task_update: TaskUpdate,
     ) -> Task | None:
         """Update an existing task.
 
@@ -79,11 +74,7 @@ class TaskRepository(ABC):
 
         Args:
             task_id: The ID of the task to update.
-            name: The new task name.
-            description: The new task description.
-            priority: The new task priority.
-            effort: The new estimated effort.
-            completed: The new completion status.
+            task_update: Data used to update the task.
 
         Returns:
             The updated task, or None if no task with the given ID exists.

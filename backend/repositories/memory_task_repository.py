@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from .task_repository import TaskRepository
-from ..models import Task, TaskCreate
+from ..models import Task, TaskCreate, TaskUpdate
 
 
 class InMemoryTaskRepository(TaskRepository):
@@ -53,27 +53,14 @@ class InMemoryTaskRepository(TaskRepository):
     def update_task(
             self,
             task_id: int,
-            *,
-            name: str | None = None,
-            description: str | None = None,
-            priority: int | None = None,
-            effort: float | None = None,
-            completed: bool | None = None,
+            task_update: TaskUpdate,
     ) -> Task | None:
         task = self.tasks.get(task_id)
         if task is None:
             return None
 
-        if name is not None:
-            task.name = name
-        if description is not None:
-            task.description = description
-        if priority is not None:
-            task.priority = priority
-        if effort is not None:
-            task.effort = effort
-        if completed is not None:
-            task.completed = completed
+        for key, value in task_update.model_dump(exclude_unset=True).items():
+            setattr(task, key, value)
 
         return task
 

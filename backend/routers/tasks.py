@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Response, status, Depends
 
 from ..dependencies import get_task_service, get_current_active_user
-from ..models import Task, TaskCreate, User
+from ..models import Task, TaskCreate, TaskUpdate, User
 from ..services import TaskService
 
 router = APIRouter()
@@ -73,17 +73,12 @@ def create_task(
     return task_service.create_task(task, current_user.id)
 
 
-@router.put("/tasks/{task_id}")
+@router.patch("/tasks/{task_id}")
 def update_task(
     task_id: int,
+    task_update: TaskUpdate,
     task_service: Annotated[TaskService, Depends(get_task_service)],
     current_user: Annotated[User, Depends(get_current_active_user)],
-    *,
-    name: str | None = None,
-    description: str | None = None,
-    priority: int | None = None,
-    effort: float | None = None,
-    completed: bool | None = None,
 ):
     """Update an existing task.
 
@@ -91,13 +86,9 @@ def update_task(
 
     Args:
         task_id: The ID of the task to update.
+        task_update: The data for the task to update.
         task_service: Task service dependency that updates tasks.
         current_user: Currently authenticated user.
-        name: The new task name.
-        description: The new task description.
-        priority: The new task priority.
-        effort: The new estimated effort.
-        completed: The new completion status.
 
     Returns:
         The updated task.
@@ -109,12 +100,8 @@ def update_task(
     """
     task = task_service.update_task(
         task_id,
+        task_update,
         current_user.id,
-        name=name,
-        description=description,
-        priority=priority,
-        effort=effort,
-        completed=completed,
     )
     return task
 
