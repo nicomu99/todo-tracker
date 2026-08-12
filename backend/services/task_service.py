@@ -1,5 +1,5 @@
 """Task service."""
-from ..models import Task, TaskCreate
+from ..models import Task, TaskCreate, TaskUpdate
 from ..models import TaskList, TaskListCreate, TaskListUpdate
 from ..repositories import TaskRepository, TaskListRepository
 from ..utils import TaskListNotFoundError, TaskNotFoundError, ForbiddenError
@@ -85,13 +85,8 @@ class TaskService:
     def update_task(
         self,
         task_id: int,
+        task_update: TaskUpdate,
         user_id: int,
-        *,
-        name: str | None = None,
-        description: str | None = None,
-        priority: int | None = None,
-        effort: float | None = None,
-        completed: bool | None = None,
     ) -> Task:
         """Update an existing task.
 
@@ -99,12 +94,8 @@ class TaskService:
 
         Args:
             task_id: The ID of the task to update.
+            task_update: Task data used to update the task.
             user_id: Unique identifier of the user requesting access.
-            name: The new task name.
-            description: The new task description.
-            priority: The new task priority.
-            effort: The new estimated effort.
-            completed: The new completion status.
 
         Returns:
             The updated task.
@@ -114,16 +105,11 @@ class TaskService:
             ForbiddenError: If the user is not authorized to access the task list.
             TaskListNotFoundError: If the task list with the given ID does not exist.
         """
-        existing_task = self._get_task(task_id)
-        self._get_owned_task_list(existing_task.task_list_id, user_id)
+        self._get_owned_task_list(task_update.task_list_id, user_id)
 
         task = self.task_repository.update_task(
             task_id,
-            name=name,
-            description=description,
-            priority=priority,
-            effort=effort,
-            completed=completed
+            task_update
         )
         if task is None:
             # Defensive check
