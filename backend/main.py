@@ -26,8 +26,7 @@ app.add_exception_handler(
 # Very simple database: We have task lists, tasks and users
 # A user can have multiple lists, each list can have multiple tasks
 
-# TODO: Hide all endpoints behind authentication
-# TODO: Create todo list per user
+# TODO: Add user endpoint/service/repository
 # TODO: Create little database
 
 

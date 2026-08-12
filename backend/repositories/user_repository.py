@@ -3,6 +3,8 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
+from ..models import User
+
 
 class UserRepository(ABC):
     """Define the persistence operations available for user items.

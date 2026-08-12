@@ -63,7 +63,7 @@ class AuthenticationService:
         user = self.user_repository.get_user(username)
         if not user:
             # Measure against timing attacks; attackers could else guess usernames
-            self.verify_password(password, DUMMY_HASH)
+            self.verify_password(password, self.dummy_hash)
             return False
         if not self.verify_password(password, user.hashed_password):
             return False

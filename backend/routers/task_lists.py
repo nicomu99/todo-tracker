@@ -10,8 +10,6 @@ from ..services import TaskService
 
 router = APIRouter()
 
-# TODO: Implement Repository functions
-
 
 @router.get("/task-lists/dump")
 def dump_task_lists(task_service: Annotated[TaskService, Depends(get_task_service)]) -> list[TaskList]:

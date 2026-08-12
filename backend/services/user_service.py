@@ -21,4 +21,4 @@ class UserService:
         """
         if username is None:
             return None
-        return self.repository.get_user(username)
+        return self.user_repository.get_user(username)
