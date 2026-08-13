@@ -2,7 +2,7 @@
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 
-from ..utils import (
+from app.exceptions import (
     TaskListNotFoundError,
     TaskNotFoundError,
     ForbiddenError,

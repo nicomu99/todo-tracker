@@ -3,7 +3,7 @@ from datetime import datetime
 
 from .task_list_repository import TaskListRepository
 
-from ..models import TaskList, TaskListCreate, TaskListUpdate
+from app.models import TaskList, TaskListCreate, TaskListUpdate
 
 
 class InMemoryTaskListRepository(TaskListRepository):

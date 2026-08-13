@@ -3,7 +3,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-from ..models import Task, TaskCreate, TaskUpdate
+from app.models import Task, TaskCreate, TaskUpdate
 
 
 class TaskRepository(ABC):

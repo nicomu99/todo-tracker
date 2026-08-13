@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from .task_repository import TaskRepository
-from ..models import Task, TaskCreate, TaskUpdate
+from app.models import Task, TaskCreate, TaskUpdate
 
 
 class InMemoryTaskRepository(TaskRepository):

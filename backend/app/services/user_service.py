@@ -1,12 +1,8 @@
 """User service."""
-from ..models import UserResponse, UserCreate, UserUpdate
-from ..repositories import UserRepository
-from ..utils import (
-    PasswordHasher,
-    UserNotFoundError,
-    UserExistsError,
-    UnexpectedError,
-)
+from app.models import UserResponse, UserCreate, UserUpdate
+from app.repositories import UserRepository
+from app.exceptions import UserNotFoundError, UserExistsError, UnexpectedError
+from app.utils import PasswordHasher
 
 
 class UserService:

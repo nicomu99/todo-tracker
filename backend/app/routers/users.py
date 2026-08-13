@@ -4,10 +4,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response, status
 
-from models import UserUpdate
-from ..dependencies import get_current_active_user, get_user_service
-from ..models import User, UserCreate, UserResponse
-from ..services import UserService
+from app.models import UserUpdate
+from app.dependencies import get_current_active_user, get_user_service
+from app.models import User, UserCreate, UserResponse
+from app.services import UserService
 
 router = APIRouter()
 

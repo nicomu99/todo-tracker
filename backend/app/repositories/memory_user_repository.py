@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from .user_repository import UserRepository
-from ..models import User, UserCreate, UserUpdate, UserResponse
+from app.models import User, UserCreate, UserUpdate, UserResponse
 
 
 class InMemoryUserRepository(UserRepository):

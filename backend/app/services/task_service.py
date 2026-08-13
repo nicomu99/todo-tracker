@@ -1,8 +1,8 @@
 """Task service."""
-from ..models import Task, TaskCreate, TaskUpdate
-from ..models import TaskList, TaskListCreate, TaskListUpdate
-from ..repositories import TaskRepository, TaskListRepository
-from ..utils import TaskListNotFoundError, TaskNotFoundError, ForbiddenError
+from app.models import Task, TaskCreate, TaskUpdate
+from app.models import TaskList, TaskListCreate, TaskListUpdate
+from app.repositories import TaskRepository, TaskListRepository
+from app.exceptions import TaskListNotFoundError, TaskNotFoundError, ForbiddenError
 
 
 class TaskService:

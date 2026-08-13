@@ -5,9 +5,9 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
-from ..services import AuthenticationService
-from ..dependencies import get_auth_service
-from ..models import Token
+from app.services import AuthenticationService
+from app.dependencies import get_auth_service
+from app.models import Token
 
 
 router = APIRouter()

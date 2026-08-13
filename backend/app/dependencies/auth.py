@@ -6,12 +6,12 @@ from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
 
 
-from ..models import User
-from ..repositories import TaskRepository, InMemoryTaskRepository
-from ..repositories import UserRepository, InMemoryUserRepository
-from ..repositories import TaskListRepository, InMemoryTaskListRepository
-from ..services import AuthenticationService, TaskService, UserService
-from ..utils import PasswordHasher
+from app.models import User
+from app.repositories import TaskRepository, InMemoryTaskRepository
+from app.repositories import UserRepository, InMemoryUserRepository
+from app.repositories import TaskListRepository, InMemoryTaskListRepository
+from app.services import AuthenticationService, TaskService, UserService
+from app.utils import PasswordHasher
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
