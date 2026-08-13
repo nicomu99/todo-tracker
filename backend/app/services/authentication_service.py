@@ -9,7 +9,7 @@ from jwt.exceptions import InvalidTokenError
 from app.models import Token, TokenData
 from app.repositories import UserRepository
 from app.exceptions import IncorrectCredentialsError
-from app.utils import PasswordHasher
+from app.security import PasswordHasher
 
 
 class AuthenticationService:

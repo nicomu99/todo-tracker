@@ -11,7 +11,7 @@ from app.repositories import TaskRepository, InMemoryTaskRepository
 from app.repositories import UserRepository, InMemoryUserRepository
 from app.repositories import TaskListRepository, InMemoryTaskListRepository
 from app.services import AuthenticationService, TaskService, UserService
-from app.utils import PasswordHasher
+from app.security import PasswordHasher
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
