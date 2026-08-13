@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 
 from .routers import tasks, tokens, users
-from .utils import (
+from .exceptions import (
     TaskListNotFoundError,
     TaskNotFoundError,
     UserNotFoundError,
