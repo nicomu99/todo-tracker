@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response, status
 
-from app.dependencies import get_task_service, get_current_active_user
+from app.api import get_task_service, get_current_active_user
 from app.models import Task, User
 from app.models import TaskList, TaskListCreate, TaskListUpdate
 from app.services import TaskService

@@ -1,7 +1,7 @@
 """Dependency module."""
 
 from .auth import get_current_active_user
-from .auth import get_task_service, get_auth_service, get_user_service
+from .dependencies import get_task_service, get_auth_service, get_user_service
 from .exception_handlers import task_list_not_found_error_handler
 from .exception_handlers import task_not_found_error_handler
 from .exception_handlers import user_not_found_error_handler

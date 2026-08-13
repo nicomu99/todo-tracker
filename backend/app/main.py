@@ -1,7 +1,8 @@
 """Main entry point."""
 from fastapi import FastAPI
 
-from .routers import tasks, tokens, users
+from app.api.routers import tokens
+from .api.routers import tasks, users
 from .exceptions import (
     TaskListNotFoundError,
     TaskNotFoundError,
@@ -11,7 +12,7 @@ from .exceptions import (
     UnexpectedError,
     IncorrectCredentialsError,
 )
-from .dependencies import (
+from .api import (
     task_list_not_found_error_handler,
     task_not_found_error_handler,
     user_not_found_error_handler,
@@ -22,7 +23,7 @@ from .dependencies import (
 )
 
 # TODO: Create little database
-# TODO: Move dependencies to its own file
+# TODO: Move api to its own file
 
 app = FastAPI()
 app.include_router(tasks.router)

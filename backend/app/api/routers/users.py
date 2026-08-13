@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Response, status
 
 from app.models import UserUpdate
-from app.dependencies import get_current_active_user, get_user_service
+from app.api import get_current_active_user, get_user_service
 from app.models import User, UserCreate, UserResponse
 from app.services import UserService
 

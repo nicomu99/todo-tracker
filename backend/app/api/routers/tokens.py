@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app.services import AuthenticationService
-from app.dependencies import get_auth_service
+from app.api import get_auth_service
 from app.models import Token
 
 
