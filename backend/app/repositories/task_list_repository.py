@@ -1,5 +1,4 @@
 """Repository interface for task lists."""
-
 from __future__ import annotations
 from abc import ABC, abstractmethod
 

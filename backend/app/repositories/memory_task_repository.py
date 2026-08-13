@@ -1,5 +1,4 @@
 """An in-memory task repository."""
-
 from datetime import datetime
 
 from .task_repository import TaskRepository

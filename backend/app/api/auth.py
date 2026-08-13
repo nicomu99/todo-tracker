@@ -1,5 +1,4 @@
 """Authentication utility functions."""
-
 from typing import Annotated
 
 from fastapi import HTTPException, status, Depends

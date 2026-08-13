@@ -1,5 +1,4 @@
 """Token model."""
-
 from pydantic import BaseModel
 
 

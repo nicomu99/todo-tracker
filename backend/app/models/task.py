@@ -1,5 +1,4 @@
 """Task model."""
-
 from datetime import datetime
 
 from pydantic import BaseModel, PositiveInt

@@ -1,5 +1,4 @@
 """User routes."""
-
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Response, status

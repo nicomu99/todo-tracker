@@ -1,5 +1,4 @@
 """Repositories module."""
-
 from .task_list_repository import TaskListRepository
 from .memory_task_list_repository import InMemoryTaskListRepository
 from .task_repository import TaskRepository
