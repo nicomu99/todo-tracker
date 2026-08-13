@@ -11,18 +11,20 @@ from ..repositories import TaskRepository, InMemoryTaskRepository
 from ..repositories import UserRepository, InMemoryUserRepository
 from ..repositories import TaskListRepository, InMemoryTaskListRepository
 from ..services import AuthenticationService, TaskService, UserService
+from ..utils import PasswordHasher
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-# TODO: Move these to its own file
+password_hasher = PasswordHasher()
+
 task_repository: TaskRepository = InMemoryTaskRepository()
 user_repository: UserRepository = InMemoryUserRepository()
 task_list_repository: TaskListRepository = InMemoryTaskListRepository()
 
-authentication_service_instance = AuthenticationService(user_repository)
+authentication_service_instance = AuthenticationService(user_repository, password_hasher)
 task_service_instance = TaskService(task_repository, task_list_repository)
-user_service_instance = UserService(user_repository)
+user_service_instance = UserService(user_repository, password_hasher)
 
 
 def get_auth_service() -> AuthenticationService:

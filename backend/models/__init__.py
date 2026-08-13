@@ -3,7 +3,7 @@
 from .task import Task, TaskCreate, TaskUpdate
 from .task_list import TaskList, TaskListCreate, TaskListUpdate
 from .token import Token, TokenData
-from .user import User, UserCreate
+from .user import User, UserCreate, UserUpdate, UserResponse
 
 __all__ = [
     "Task",
@@ -16,4 +16,6 @@ __all__ = [
     "TokenData",
     "User",
     "UserCreate",
+    "UserUpdate",
+    "UserResponse",
 ]

@@ -1,15 +1,17 @@
 """An in-memory user repository."""
 
 from __future__ import annotations
+from datetime import datetime
 
 from .user_repository import UserRepository
-from ..models import UserCreate, User
+from ..models import User, UserCreate, UserUpdate, UserResponse
 
 
 class InMemoryUserRepository(UserRepository):
     def __init__(self) -> None:
-        self.users: dict[str, User] = {
-            "johndoe": User(**{
+        self.next_user_id: int = 0
+        self.users: dict[int, User] = {
+            0: User(**{
                 "id": 0,
                 "username": "johndoe",
                 "full_name": "John Doe",
@@ -20,41 +22,42 @@ class InMemoryUserRepository(UserRepository):
             })
         }
 
-    def get_user(self, username: str) -> User | None:
-        if username in self.users:
-            return self.users[username]
+    def get_user(self, user_id: int) -> User | None:
+        if user_id not in self.users:
+            return None
+        return self.users[user_id]
+
+    def get_user_by_username(self, username: str) -> User | None:
+        for user in self.users.values():
+            if user.username == username:
+                return user
         return None
 
-    def create_user(self, user: UserCreate) -> User | None:
-        # TODO hash password
-        if user.username in self.users:
-            return None
-        self.users[user.username] = user
-        return user
+    def create_user(self, user: UserCreate, hashed_password: str) -> UserResponse | None:
+        for existing_user in self.users.values():
+            if existing_user.username == user.username:
+                return None
+        new_user = User(
+            id=self.next_user_id,
+            username=user.username,
+            hashed_password=hashed_password,
+            full_name=user.full_name,
+            email=user.email,
+            created_at=datetime.now(),
+        )
+        self.users[self.next_user_id] = new_user
+        self.next_user_id += 1
+        return UserResponse(**user.model_dump())
 
-    def update_user(
-        self,
-        username: str,
-        *,
-        email: str | None = None,
-        full_name: str | None = None,
-        disabled: bool | None = None,
-    ) -> User | None:
-        user = self.users.get(username)
+    def update_user(self, user_id: int, user: UserUpdate) -> UserResponse | None:
+        user = self.users.get(user_id)
         if user is None:
             return None
 
-        if email is not None:
-            user.email = email
-        if full_name is not None:
-            user.full_name = full_name
-        if disabled is not None:
-            user.disabled = disabled
+        for key, value in user.model_dump(exclude_unset=True).items():
+            setattr(user, key, value)
 
-        return user
+        return UserResponse(**user.model_dump())
 
-    def delete_user(self, username: str) -> bool:
-        if username in self.users:
-            del self.users[username]
-            return True
-        return False
+    def delete_user(self, user_id: int) -> bool:
+        return self.users.pop(user_id, None) is not None

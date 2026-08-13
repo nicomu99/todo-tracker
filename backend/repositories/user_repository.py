@@ -3,7 +3,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-from ..models import User
+from ..models import User, UserCreate, UserUpdate, UserResponse
 
 
 class UserRepository(ABC):
@@ -15,11 +15,23 @@ class UserRepository(ABC):
     """
 
     @abstractmethod
-    def get_user(self, username: str) -> User | None:
+    def get_user(self, user_id: int) -> User | None:
+        """Return the user with the given ID.
+
+        Args:
+            user_id: The unique user_id of the user.
+
+        Returns:
+            The matching user, or None if no user with the given user_id exists.
+        """
+        ...
+
+    @abstractmethod
+    def get_user_by_username(self, username: str) -> User | None:
         """Return the user with the given username.
 
         Args:
-            username: The unique identifier of the user.
+            username: The unique username of the user.
 
         Returns:
             The matching user, or None if no user with the given username exists.
@@ -27,11 +39,12 @@ class UserRepository(ABC):
         ...
 
     @abstractmethod
-    def create_user(self, user: User) -> User:
+    def create_user(self, user: UserCreate, hashed_password: str) -> UserResponse | None:
         """Store a new user.
 
         Args:
             user: The user to store.
+            hashed_password: The hashed password of the user.
 
         Returns:
             The stored user, including any values generated during
@@ -40,24 +53,15 @@ class UserRepository(ABC):
         ...
 
     @abstractmethod
-    def update_user(
-        self,
-        username: str,
-        *,
-        email: str | None = None,
-        full_name: str | None = None,
-        disabled: bool | None = None,
-    ) -> User | None:
+    def update_user(self, user_id: int, user: UserUpdate) -> UserResponse | None:
         """Update an existing user.
 
         Only fields whose values are not None are updated. Fields set to None
         remain unchanged.
 
         Args:
-            username: The username of the user to update.
-            email: The user's new email address.
-            full_name: The user's new full name.
-            disabled: The user's new disabled status.
+            user_id: The ID of the user to update.
+            user: Data used to update the user object.
 
         Returns:
             The updated user, or None if no user with the given username exists.
@@ -65,11 +69,11 @@ class UserRepository(ABC):
         ...
 
     @abstractmethod
-    def delete_user(self, username: str) -> bool:
+    def delete_user(self, user_id: int) -> bool:
         """Delete the user with the given ID.
 
         Args:
-            username: The unique identifier of the username to delete.
+            user_id: The unique identifier of the user to delete.
 
         Returns:
             True if a user was deleted, otherwise False.

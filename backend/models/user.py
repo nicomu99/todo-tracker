@@ -1,4 +1,5 @@
 """User model."""
+from datetime import datetime
 
 from pydantic import BaseModel
 
@@ -10,6 +11,7 @@ class User(BaseModel):
     email: str | None = None
     full_name: str | None = None
     disabled: bool | None = None
+    created_at: datetime
 
 
 class UserCreate(BaseModel):
@@ -18,3 +20,15 @@ class UserCreate(BaseModel):
     email: str | None = None
     full_name: str | None = None
     disabled: bool | None = None
+
+
+class UserUpdate(BaseModel):
+    username: str
+    password: str | None = None
+    email: str | None = None
+    full_name: str | None = None
+
+
+class UserResponse(BaseModel):
+    id: int
+    username: str

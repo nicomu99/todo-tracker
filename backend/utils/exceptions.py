@@ -17,5 +17,21 @@ class TaskNotFoundError(Exception):
         super().__init__(f"Task list with ID {task_id} not found.")
 
 
+class UserNotFoundError(Exception):
+    """Raised when a requested user does not exist."""
+
+
+class UserExistsError(Exception):
+    """Raised when a requested user already exists."""
+
+
 class ForbiddenError(Exception):
     """Raised when a user is not authorized to access an object."""
+
+
+class UnexpectedError(Exception):
+    """Raised when an unexpected error occurs."""
+
+
+class IncorrectCredentialsError(Exception):
+    """Raised when a user enters incorrect credentials."""
