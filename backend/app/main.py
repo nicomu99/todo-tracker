@@ -23,7 +23,6 @@ from .api import (
 )
 
 # TODO: Create little database
-# TODO: Move api to its own file
 
 app = FastAPI()
 app.include_router(tasks.router)
