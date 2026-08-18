@@ -1,8 +1,8 @@
 """Main entry point."""
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routers import tokens
-from .api.routers import tasks, users
+from .api.routers import tasks, users, auth
 from .exceptions import (
     TaskListNotFoundError,
     TaskNotFoundError,
@@ -25,9 +25,22 @@ from .api import (
 # TODO: Create little database
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(tasks.router)
 app.include_router(users.router)
-app.include_router(tokens.router)
+app.include_router(auth.router)
 
 app.add_exception_handler(
     TaskListNotFoundError, task_list_not_found_error_handler  # type: ignore

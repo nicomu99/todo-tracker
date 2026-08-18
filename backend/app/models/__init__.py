@@ -1,7 +1,7 @@
 """Models module."""
 from .task import Task, TaskCreate, TaskUpdate
 from .task_list import TaskList, TaskListCreate, TaskListUpdate
-from .token import Token, TokenData
+from .token import AccessToken, TokenData
 from .user import User, UserCreate, UserUpdate, UserResponse
 
 __all__ = [
@@ -11,7 +11,7 @@ __all__ = [
     "TaskList",
     "TaskListCreate",
     "TaskListUpdate",
-    "Token",
+    "AccessToken",
     "TokenData",
     "User",
     "UserCreate",
