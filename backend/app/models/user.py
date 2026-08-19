@@ -32,3 +32,4 @@ class UserUpdate(BaseModel):
 class UserResponse(BaseModel):
     id: int
     username: str
+    full_name: str

@@ -36,7 +36,7 @@ def login_for_access_token(
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=True,
+        secure=False,
         samesite="lax"
     )
 
