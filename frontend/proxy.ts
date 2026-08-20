@@ -15,6 +15,11 @@ function getLocale(request: NextRequest) {
     return match(languages, locales, defaultLocale)
 }
 
+/**
+ * Redirects non-localized application routes to their localized equivalents.
+ *
+ * Static assets and internals are excluded through `config.mather`.
+ */
 export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl
     const pathnameHasLocale = locales.some(
@@ -31,7 +36,6 @@ export function proxy(request: NextRequest) {
 // noinspection JSUnusedGlobalSymbols
 export const config = {
     matcher: [
-        // Skip all internal paths (_next)
-        '/((?!_next).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\..*).*)',
     ],
 }
