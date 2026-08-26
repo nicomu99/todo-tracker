@@ -49,6 +49,7 @@ class InMemoryTaskListRepository(TaskListRepository):
             created_at=datetime.now(),
             updated_at=datetime.now(),
         )
+        self.task_lists[self.next_list_id] = new_task_list
         self.next_list_id += 1
         return new_task_list
 
