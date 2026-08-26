@@ -5,6 +5,7 @@
   --color-*: initial;
 
   --color-white: #ffffff;
+  --color-black: #000000;
 
   --color-background: #0d0d0f;
   --color-surface: #17171a;
@@ -17,6 +18,10 @@
   --color-accent: #e5484d;
   --color-accent-hover: #f2555a;
   --color-accent-dark: #8c2f34;
+
+  --color-positive: #4ADE80;
+  --color-neutral: #FACC15;
+  --color-negative: #F87171;
 
   --color-border: #2c2c31;
 

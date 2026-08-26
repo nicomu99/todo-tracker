@@ -11,9 +11,9 @@ export default function Logo() {
                 height={100}
                 priority
             />
-            <h1 className="text-2xl font-bold font-mono tracking-tight text-accent">
+            <p className="text-2xl font-bold font-mono tracking-tight text-accent">
                 Questlog
-            </h1>
+            </p>
         </div>
     );
 }

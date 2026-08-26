@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Logo from "@/icons/logo";
-import DashboardLink from "@/components/dashboard-link";
+import DashboardLink from "@/components/ui/dashboard-link";
 import { useAuth } from "@/providers/auth-provider";
 import DashboardIcon from "@/icons/dashboard-icon";
 import TaskListIcon from "@/icons/tasklist-icon";
