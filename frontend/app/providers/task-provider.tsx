@@ -71,7 +71,7 @@ type TaskContextType = {
     deleteTask: (taskId: number) => Promise<void>;
 
     loadTaskLists: () => Promise<void>;
-    createTaskList: (taskList: TaskListCreate) => Promise<void>;
+    createTaskList: (taskList: TaskListCreate) => Promise<TaskList>;
     updateTaskList: (taskList: TaskListUpdate) => Promise<void>;
     deleteTaskList: (taskListId: number) => Promise<void>;
 }
@@ -147,10 +147,29 @@ export function TaskProvider({ children }: { children: ReactNode }) {
         );
 
         setTasks(allTasks.flat());
-        console.log(allTasks);
     }
 
     async function createTaskList(taskList: TaskListCreate) {
+        const response = await fetch("http://localhost:8000/task-lists/", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskList),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to create task list");
+        }
+
+        const createdTaskList: TaskList = await response.json();
+        setTaskLists(previous => [
+            ...previous,
+            createdTaskList,
+        ]);
+
+        return createdTaskList;
     }
 
     async function updateTaskList(taskList: TaskListUpdate) {

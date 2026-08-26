@@ -16,7 +16,7 @@ export default function TaskListOverview() {
         <DashboardCard>
             <div className="flex flex-row items-center gap-8 mb-4">
                 <CardIcon>
-                    <TaskListIcon/>
+                    <TaskListIcon width={"3em"}/>
                 </CardIcon>
                 <CardTitle>
                     Task Lists
@@ -25,7 +25,7 @@ export default function TaskListOverview() {
             <div className="divide-y divide-text-muted/40">
                 <CardItemButtonPlain>
                     <Link className="flex flex-row items-center gap-3" href={`/${lang}/dashboard/create-list`}>
-                    <div className="
+                        <div className="
                                 w-10 h-10
                                 flex items-center justify-center
                                 border border-accent border-dashed rounded-md
@@ -40,17 +40,18 @@ export default function TaskListOverview() {
                                 group-active:bg-accent
                                 group-active:text-background
                             "
-                    >
-                        +
-                    </div>
-                    <p className="transition-colors duration-200 group-hover:text-accent-hover">Add new task list</p>
-                </Link>
-            </CardItemButtonPlain>
-            {taskLists.map(item => (
-                <TasklistItemButtonPlain key={item.id} taskList={item}/>
-            ))}
-        </div>
-</DashboardCard>
-)
-    ;
+                        >
+                            +
+                        </div>
+                        <p className="transition-colors duration-200 group-hover:text-accent-hover">Add new task
+                            list</p>
+                    </Link>
+                </CardItemButtonPlain>
+                {taskLists.map(item => (
+                    <TasklistItemButtonPlain key={item.id} taskList={item}/>
+                ))}
+            </div>
+        </DashboardCard>
+    )
+        ;
 }

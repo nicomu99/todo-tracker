@@ -9,7 +9,7 @@ from app.models import TaskList, TaskListCreate, TaskListUpdate
 class InMemoryTaskListRepository(TaskListRepository):
 
     def __init__(self):
-        self.next_list_id = 1
+        self.next_list_id = 2
         self.task_lists = {
             0: TaskList(**{
                 "id": 0,
