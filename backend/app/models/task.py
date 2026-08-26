@@ -12,7 +12,7 @@ class Task(BaseModel):
     priority: PositiveInt = 0
     effort: PositiveInt = 0
     completed: bool
-    created_at: datetime
+    due_date: datetime
 
 
 class TaskCreate(BaseModel):

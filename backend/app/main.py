@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .api.routers import tasks, users, auth
+from .api.routers import tasks, users, auth, task_lists
 from .exceptions import (
     TaskListNotFoundError,
     TaskNotFoundError,
@@ -41,6 +41,7 @@ app.add_middleware(
 app.include_router(tasks.router)
 app.include_router(users.router)
 app.include_router(auth.router)
+app.include_router(task_lists.router)
 
 app.add_exception_handler(
     TaskListNotFoundError, task_list_not_found_error_handler  # type: ignore

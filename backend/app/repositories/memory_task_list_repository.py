@@ -18,6 +18,14 @@ class InMemoryTaskListRepository(TaskListRepository):
                 "description": "This is my general to-do list.",
                 "created_at": datetime.now(),
                 "updated_at": datetime.now(),
+            }),
+            1: TaskList(**{
+                "id": 1,
+                "user_id": 0,
+                "name": "Master's Thesis",
+                "description": "A task list with important tasks for my Master's Thesis.",
+                "created_at": datetime.now(),
+                "updated_at": datetime.now(),
             })
         }
 
