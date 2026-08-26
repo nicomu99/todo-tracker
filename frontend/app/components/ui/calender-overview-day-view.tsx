@@ -1,31 +1,21 @@
 import {isSameDay } from "date-fns";
 import TaskItemButtonHighlighted from "@/components/ui/task-item-button-highlighted";
+import { useTasks } from "@/providers/task-provider";
 
 type CalenderOverviewDayViewProps = {
     date: Date
 }
 
-// TODO: Get tasks dynamically
-
 export const CalenderOverviewDayView = ({date}: CalenderOverviewDayViewProps) => {
-    const taskTitle = "Pack Suitcase"
-    const dueDate = new Date("September 21, 2026 18:00:00")
-    const priority = 1;
-
-    const dateString = dueDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-    });
-
-    const timeString = date.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
+    const { tasks } = useTasks();
+    const dailyTasks = tasks.filter((task) => isSameDay(task.dueDate, date));
 
     return (
         <div className="flex flex-col gap-5 mt-5">
-            {isSameDay(date, dueDate)?
-                <TaskItemButtonHighlighted taskTitle={taskTitle} dueDate={dateString} dueTime={timeString} priority={priority} /> :
+            {dailyTasks.length > 0 ?
+                dailyTasks.map(task => (
+                        <TaskItemButtonHighlighted task={task} key={task.id}/>
+                    )) :
                 <div className={"text-center"}>
                     No tasks today!
                 </div>

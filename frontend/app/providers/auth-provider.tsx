@@ -115,7 +115,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.error(error);
             return;
         }
-
     }
 
     useEffect(() => {

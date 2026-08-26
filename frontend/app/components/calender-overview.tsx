@@ -21,7 +21,6 @@ export default function CalenderOverview() {
         const resultDate = addDays(currentDate, deltaWeeks * 7);
         setCurrentDate(resultDate);
     };
-    console.log(currentDate);
 
     return (
         <DashboardCard>
