@@ -1,11 +1,16 @@
 import CardItemButtonPlain from "@/components/ui/card-item-button-plain";
+import { TaskList, useTasks } from "@/providers/task-provider";
 
 type TaskListItemButtonPlainProps = {
-    taskTitle: string;
-    openTasksCount: number;
+    taskList: TaskList;
 }
 
-export default function TasklistItemButtonPlain({ taskTitle, openTasksCount }: TaskListItemButtonPlainProps) {
+export default function TasklistItemButtonPlain({ taskList }: TaskListItemButtonPlainProps) {
+    const { tasks } = useTasks();
+    const listTasks = tasks.filter(
+        task => task.taskListId === taskList.id && !task.completed
+    )
+
     return (
         <CardItemButtonPlain>
             <div className="flex flex-row items-center gap-3">
@@ -27,9 +32,9 @@ export default function TasklistItemButtonPlain({ taskTitle, openTasksCount }: T
                         group-active:text-background
                         "
                 />
-                <p>{taskTitle}</p>
+                <p>{taskList.name}</p>
             </div>
-            <p className={"text-text-muted font-light"}>{openTasksCount} open tasks</p>
+            <p className={"text-text-muted font-light"}>{listTasks.length} open tasks</p>
         </CardItemButtonPlain>
     );
 }

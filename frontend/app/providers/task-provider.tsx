@@ -35,7 +35,7 @@ type TaskUpdate = {
     effort?: number;
 }
 
-type TaskList = {
+export type TaskList = {
     id: number;
     name: string;
     description: string;

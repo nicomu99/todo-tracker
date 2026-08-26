@@ -47,7 +47,7 @@ export default function TaskListOverview() {
                 </Link>
             </CardItemButtonPlain>
             {taskLists.map(item => (
-                <TasklistItemButtonPlain key={item.id} taskTitle={item.name} openTasksCount={4}/>
+                <TasklistItemButtonPlain key={item.id} taskList={item}/>
             ))}
         </div>
 </DashboardCard>

@@ -16,8 +16,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "description": "Buy tomatoes, peaches, milk, and bread",
                 "priority": 2,
                 "effort": 2,
-                "completed": False,
-                "due_date": datetime.now() + timedelta(days=2) + timedelta(hours=7) + timedelta(minutes=30)
+                "completed": True,
+                "due_date": datetime.now() - timedelta(days=2)
             }),
 
             1: Task(**{

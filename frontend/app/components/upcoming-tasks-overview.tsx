@@ -7,7 +7,8 @@ import { useTasks } from "@/providers/task-provider";
 
 export default function UpcomingTasksOverview() {
     const { tasks } = useTasks();
-    const upcomingTasks = tasks
+    const unfinishedTasks = tasks.filter((task) => !task.completed)
+    const upcomingTasks = unfinishedTasks
         .slice()
         .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
         .slice(0, 4);
