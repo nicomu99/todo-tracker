@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 
-export default function CardItemButtonHighlighted({
+export default function CardItemHighlighted({
     children,
     onSelect
 }: {
@@ -9,12 +9,11 @@ export default function CardItemButtonHighlighted({
     onSelect: () => void;
 }) {
     return (
-        <button
+        <div
             className={`
                 px-5 py-3 group w-full
                 flex flex-col items-center justify-between
-                bg-white/20
-                rounded-xl
+                rounded-xl bg-white/20
     
                 transition-all duration-150
                 hover:cursor-pointer 
@@ -29,6 +28,6 @@ export default function CardItemButtonHighlighted({
             onClick={onSelect}
         >
             {children}
-        </button>
+        </div>
     )
 }

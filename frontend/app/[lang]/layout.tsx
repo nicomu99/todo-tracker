@@ -20,7 +20,10 @@ export const metadata: Metadata = {
 };
 
 // TODO: Look at metadata
-// TODO: Create task list/task context and provider
+// TODO: Style edit button
+// TODO: Add task delete button
+// TODO: Add task list update view
+// TODO: Add task list delete button
 
 export default async function RootLayout({children, params}: LayoutProps<"/[lang]">) {
     const {lang} = await params;

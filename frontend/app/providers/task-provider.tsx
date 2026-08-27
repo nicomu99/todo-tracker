@@ -12,6 +12,7 @@ export type Task = {
     effort: number;
     completed: boolean;
     dueDate: Date;
+    createdAt: Date;
 }
 
 type TaskResponse = {
@@ -23,6 +24,7 @@ type TaskResponse = {
     effort: number;
     completed: boolean;
     due_date: Date;
+    created_at: Date;
 }
 
 type TaskCreate = {
@@ -30,11 +32,13 @@ type TaskCreate = {
     description: string;
 }
 
-type TaskUpdate = {
+export type TaskUpdate = {
+    task_list_id: number;
     name?: string;
     description?: string;
     priority?: number;
     effort?: number;
+    due_date?: string;
 }
 
 export type TaskList = {
@@ -72,7 +76,7 @@ type TaskContextType = {
 
     loadTasks: () => Promise<void>;
     createTask: (task: TaskCreate) => Promise<void>;
-    updateTask: (task: TaskUpdate) => Promise<void>;
+    updateTask: (taskId: number, task: TaskUpdate) => Promise<Task>;
     deleteTask: (taskId: number) => Promise<void>;
 
     loadTaskLists: () => Promise<void>;
@@ -95,7 +99,41 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     async function createTask(task: TaskCreate) {
     }
 
-    async function updateTask(task: TaskUpdate) {
+    async function updateTask(taskId: number, task: TaskUpdate) {
+        const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(task),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update task");
+        }
+
+        const updatedTask: TaskResponse = await response.json();
+        const newTask: Task = {
+            id: updatedTask.id,
+            taskListId: updatedTask.task_list_id,
+            name: updatedTask.name,
+            description: updatedTask.description ?? "",
+            priority: updatedTask.priority,
+            effort: updatedTask.effort,
+            completed: updatedTask.completed,
+            dueDate: new Date(updatedTask.due_date),
+            createdAt: new Date(updatedTask.created_at),
+        }
+        setTasks(prevTasks =>
+            prevTasks.map(task =>
+                task.id === newTask.id
+                    ? newTask
+                    : task
+            )
+        );
+
+        return newTask;
     }
 
     async function deleteTask(taskId: number) {
@@ -152,6 +190,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
                     effort: task.effort,
                     completed: task.completed,
                     dueDate: new Date(task.due_date),
+                    createdAt: new Date(task.created_at),
                 }));
             })
         );
