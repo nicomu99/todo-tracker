@@ -1,15 +1,18 @@
 import { ReactNode } from "react";
+import Link from "next/link";
 
 type CardItemButtonPlainProps = {
     children: ReactNode;
+    href: string;
 }
 
 export default function CardItemButtonPlain({
-    children
+    children,
+    href,
 }: CardItemButtonPlainProps) {
     return (
         <div className={`flex items-center justify-between`}>
-            <button className={`
+            <Link className={`
                 px-5 py-3 group w-full
                 flex flex-row items-center justify-between gap-3
                 rounded-md
@@ -22,9 +25,9 @@ export default function CardItemButtonPlain({
                 
                 active:translate-y-0
                 active:shadow-[0_2px_6px_rgba(0,0,0,0.25)]
-            `}>
+            `} href={`${href}`}>
                 {children}
-            </button>
+            </Link>
         </div>
     );
 }

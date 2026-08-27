@@ -5,7 +5,6 @@ import CardIcon from "@/components/ui/card-icon";
 import TasklistItemButtonPlain from "@/components/ui/tasklist-item-button-plain";
 import CardItemButtonPlain from "@/components/ui/card-item-button-plain";
 import { useTasks } from "@/providers/task-provider";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function TaskListOverview() {
@@ -23,8 +22,8 @@ export default function TaskListOverview() {
                 </CardTitle>
             </div>
             <div className="divide-y divide-text-muted/40">
-                <CardItemButtonPlain>
-                    <Link className="flex flex-row items-center gap-3" href={`/${lang}/dashboard/create-list`}>
+                <CardItemButtonPlain href={`/${lang}/dashboard/task-lists/create-list`}>
+                    <div className="flex flex-row items-center gap-3" >
                         <div className="
                                 w-10 h-10
                                 flex items-center justify-center
@@ -43,9 +42,10 @@ export default function TaskListOverview() {
                         >
                             +
                         </div>
-                        <p className="transition-colors duration-200 group-hover:text-accent-hover">Add new task
-                            list</p>
-                    </Link>
+                        <p className="transition-colors duration-200 group-hover:text-accent-hover">
+                            Add new task list
+                        </p>
+                    </div>
                 </CardItemButtonPlain>
                 {taskLists.map(item => (
                     <TasklistItemButtonPlain key={item.id} taskList={item}/>

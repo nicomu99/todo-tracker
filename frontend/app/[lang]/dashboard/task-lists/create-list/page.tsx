@@ -8,6 +8,7 @@ import PageTitle from "@/components/ui/page-title";
 import Input from "@/components/ui/input";
 import { useTasks } from "@/providers/task-provider";
 import CheckIcon from "@/icons/check-icon";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 export default function CreateListPage() {
     const [listNameError, setListNameError] = useState("");
@@ -59,6 +60,7 @@ export default function CreateListPage() {
     return (
         <div className="bg-background ml-74 mt-10 mr-10">
             <DashboardCard>
+                <Breadcrumbs />
                 <div className="flex flex-row items-center gap-8 mb-4">
                     <CardIcon>
                         <TaskListIcon width="2.5em" height="2.5em"/>

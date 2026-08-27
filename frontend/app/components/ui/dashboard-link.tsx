@@ -1,6 +1,6 @@
 import Link from "next/link";
-import {ReactNode} from "react";
-import {usePathname} from "next/navigation";
+import { ReactNode } from "react";
+import { useParams, usePathname } from "next/navigation";
 
 type LinkProps = {
     link: string;
@@ -11,19 +11,25 @@ type LinkProps = {
 }
 
 export default function DashboardLink({
-    link, linkText, className, textClassName, icon
+    link, linkText, className, textClassName, icon,
 }: LinkProps) {
     const pathname = usePathname();
-    const isActive = pathname === link;
+    const { lang } = useParams();
+
+    const isDashboardRoot = link === `/${lang}/dashboard`;
+    const isActive =
+        pathname === link ||
+        (pathname.startsWith(`${link}/`) && !isDashboardRoot);
 
     const styling = isActive ?
-        "bg-accent/10 font-normal border-b-2 border-accent" :
+        "bg-accent/10 font-normal border-accent" :
         "text-text-muted font-light";
 
     return (
-        <Link href={link} className={`${className} flex gap-2 items-center px-4 py-2.5 ${styling} hover:brightness-120 transition`}>
+        <Link href={link}
+              className={`${className} flex gap-2 items-center px-4 py-2.5 border-b-2 ${styling} hover:brightness-120 transition`}>
             {icon}
             <span className={`${textClassName} leading-none`}>{linkText}</span>
         </Link>
-    )
+    );
 }
