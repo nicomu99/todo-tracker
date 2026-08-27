@@ -18,7 +18,7 @@ export default function TaskListItemDetail({
     const [successMessage, setSuccessMessage] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const { updateTask } = useTasks();
+    const { updateTask, deleteTask } = useTasks();
 
     function handleEditToggle() {
         setMode("editing");
@@ -62,6 +62,14 @@ export default function TaskListItemDetail({
         }
     }
 
+    async function handleDelete(taskId: number) {
+        try {
+            await deleteTask(taskId);
+        } catch {
+            setErrorMessage("Could not delete task.");
+        }
+    }
+
     return (
         <div className="flex flex-col rounded-xl bg-black">
             <CardItemHighlighted
@@ -71,7 +79,13 @@ export default function TaskListItemDetail({
                     );
                 }}
             >
-                <TaskItemSummary task={task} onClick={handleEditToggle} showEditButton/>
+                <TaskItemSummary
+                    task={task}
+                    onClickEdit={handleEditToggle}
+                    showEditButton
+                    onClickDelete={handleDelete}
+                    showDeleteButton
+                />
             </CardItemHighlighted>
 
             <div

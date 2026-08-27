@@ -20,8 +20,7 @@ export const metadata: Metadata = {
 };
 
 // TODO: Look at metadata
-// TODO: Style edit button
-// TODO: Add task delete button
+// TODO: Style delete/edit button
 // TODO: Add task list update view
 // TODO: Add task list delete button
 

@@ -27,9 +27,13 @@ type TaskResponse = {
     created_at: Date;
 }
 
-type TaskCreate = {
+export type TaskCreate = {
+    task_list_id: number;
     name: string;
     description: string;
+    priority: number;
+    effort: number;
+    due_date: string;
 }
 
 export type TaskUpdate = {
@@ -75,7 +79,7 @@ type TaskContextType = {
     isLoadingTaskLists: boolean;
 
     loadTasks: () => Promise<void>;
-    createTask: (task: TaskCreate) => Promise<void>;
+    createTask: (task: TaskCreate) => Promise<Task>;
     updateTask: (taskId: number, task: TaskUpdate) => Promise<Task>;
     deleteTask: (taskId: number) => Promise<void>;
 
@@ -97,6 +101,37 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     const [isLoadingTaskLists, setIsLoadingTaskLists] = useState<boolean>(true);
 
     async function createTask(task: TaskCreate) {
+        const response = await fetch("http://localhost:8000/tasks/", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(task),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to create task list");
+        }
+
+        const taskResponse: TaskResponse = await response.json();
+        const newTask: Task = {
+            id: taskResponse.id,
+            taskListId: taskResponse.task_list_id,
+            name: taskResponse.name,
+            description: taskResponse.description ?? "",
+            priority: taskResponse.priority,
+            effort: taskResponse.effort,
+            completed: taskResponse.completed,
+            dueDate: new Date(taskResponse.due_date),
+            createdAt: new Date(taskResponse.created_at),
+        }
+        setTasks(previous => [
+            ...previous,
+            newTask,
+        ]);
+
+        return newTask;
     }
 
     async function updateTask(taskId: number, task: TaskUpdate) {
@@ -137,6 +172,22 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
 
     async function deleteTask(taskId: number) {
+        const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete task");
+        }
+
+        setTasks(prevTasks =>
+            prevTasks.filter(task =>
+                task.id !== taskId
+            )
+        );
     }
 
     async function loadTaskLists() {

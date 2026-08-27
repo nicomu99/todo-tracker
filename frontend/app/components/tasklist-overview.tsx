@@ -15,7 +15,7 @@ export default function TaskListOverview() {
         <DashboardCard>
             <div className="flex flex-row items-center gap-8 mb-4">
                 <CardIcon>
-                    <TaskListIcon width={"3em"}/>
+                    <TaskListIcon />
                 </CardIcon>
                 <CardTitle>
                     Task Lists

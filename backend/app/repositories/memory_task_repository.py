@@ -7,7 +7,7 @@ from app.models import Task, TaskCreate, TaskUpdate
 
 class InMemoryTaskRepository(TaskRepository):
     def __init__(self):
-        self.next_task_id = 1
+        self.next_task_id = 10
         self.tasks: dict[int, Task] = {
             0: Task(**{
                 "id": 0,

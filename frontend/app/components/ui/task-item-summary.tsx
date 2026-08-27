@@ -4,11 +4,15 @@ import { Task } from "@/providers/task-provider";
 export default function TaskItemSummary({
     task,
     showEditButton,
-    onClick,
+    showDeleteButton,
+    onClickEdit,
+    onClickDelete,
 }: {
     task: Task;
     showEditButton?: boolean;
-    onClick?: () => void;
+    showDeleteButton?: boolean;
+    onClickEdit?: () => void;
+    onClickDelete?: (taskId: number) => void;
 }) {
     const dateString = task.dueDate.toLocaleDateString("en-US", {
         month: "short",
@@ -21,9 +25,11 @@ export default function TaskItemSummary({
 
     return (
         <div className="w-full flex flex-row items-center justify-between gap-3">
-            <div className={`
+            <div
+                className={`
                 flex flex-col items-start
-            `}>
+            `}
+            >
                 <p className="text-">{task.name}</p>
                 <div className="flex flex-row items-center gap-1 text-xs text-text-muted">
                     <p>{dateString}</p>
@@ -31,21 +37,37 @@ export default function TaskItemSummary({
                     <p>{timeString}</p>
                 </div>
             </div>
-            {showEditButton && (
-                <button
-                    onClick={(event) => {
-                        event.stopPropagation();
-                        if (onClick) {
-                            onClick();
-                        }
-                    }}
-                    className={`ml-auto mr-4`}
-                >
-                    Edit
-                </button>
-            )}
 
-            <PriorityIndicator priority={task.priority}/>
+            <div className={"flex flex-row gap-3"}>
+                {showEditButton && (
+                    <button
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            if (onClickEdit) {
+                                onClickEdit();
+                            }
+                        }}
+                        className={`w-20`}
+                    >
+                        Edit
+                    </button>
+                )}
+                {showDeleteButton && (
+                    <button
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            if (onClickDelete) {
+                                onClickDelete(task.id);
+                            }
+                        }}
+                        className={`w-20`}
+                    >
+                        Delete
+                    </button>
+                )}
+
+                <PriorityIndicator priority={task.priority}/>
+            </div>
         </div>
     );
 }
