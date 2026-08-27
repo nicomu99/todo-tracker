@@ -2,10 +2,13 @@ import CardIcon from "@/components/ui/card-icon";
 import CardTitle from "@/components/ui/card-title";
 import DashboardCard from "@/components/ui/dashboard-card";
 import ClockIcon from "@/icons/clock-icon";
-import TaskItemButtonHighlighted from "@/components/ui/task-item-button-highlighted";
+import TaskItemSummary from "@/components/ui/task-item-summary";
 import { useTasks } from "@/providers/task-provider";
+import CardItemLinkHighlighted from "@/components/ui/card-item-link-highlighted";
+import { useParams } from "next/navigation";
 
 export default function UpcomingTasksOverview() {
+    const { lang } = useParams();
     const { tasks } = useTasks();
     const unfinishedTasks = tasks.filter((task) => !task.completed)
     const upcomingTasks = unfinishedTasks
@@ -25,10 +28,11 @@ export default function UpcomingTasksOverview() {
             </div>
             <div className="flex flex-col gap-3">
                 {upcomingTasks.map((task) => (
-                    <TaskItemButtonHighlighted
-                        key={task.id}
-                        task={task}
-                    />
+                    <CardItemLinkHighlighted href={`/${lang}/dashboard/task-lists/${task.taskListId}`} key={task.id}>
+                        <TaskItemSummary
+                            task={task}
+                        />
+                    </CardItemLinkHighlighted>
                 ))}
             </div>
         </DashboardCard>

@@ -4,14 +4,14 @@ import DashboardCard from "@/components/ui/dashboard-card";
 import CardIcon from "@/components/ui/card-icon";
 import TaskListIcon from "@/icons/tasklist-icon";
 import PageTitle from "@/components/ui/page-title";
-import CardItemButtonPlain from "@/components/ui/card-item-button-plain";
-import TasklistItemButtonPlain from "@/components/ui/tasklist-item-button-plain";
+import CardItemLinkPlain from "@/components/ui/card-item-link-plain";
+import TasklistItemLinkPlain from "@/components/ui/tasklist-item-link-plain";
 import { useTasks } from "@/providers/task-provider";
 import { useParams } from "next/navigation";
 import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 export default function TaskListPage() {
-    const {taskLists} = useTasks();
+    const { taskLists } = useTasks();
     const { lang } = useParams();
 
     return (
@@ -27,8 +27,8 @@ export default function TaskListPage() {
                     </PageTitle>
                 </div>
                 <div className="divide-y divide-text-muted/40">
-                    <CardItemButtonPlain href={`/${lang}/dashboard/task-lists/create-list`}>
-                        <div className="flex flex-row items-center gap-3" >
+                    <CardItemLinkPlain href={`/${lang}/dashboard/task-lists/new`}>
+                        <div className="flex flex-row items-center gap-3">
                             <div className="
                                 w-10 h-10
                                 flex items-center justify-center
@@ -51,9 +51,9 @@ export default function TaskListPage() {
                                 Add new task list
                             </p>
                         </div>
-                    </CardItemButtonPlain>
+                    </CardItemLinkPlain>
                     {taskLists.map(item => (
-                        <TasklistItemButtonPlain key={item.id} taskList={item}/>
+                        <TasklistItemLinkPlain key={item.id} taskList={item}/>
                     ))}
                 </div>
             </DashboardCard>

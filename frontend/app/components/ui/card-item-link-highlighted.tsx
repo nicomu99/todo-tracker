@@ -1,18 +1,18 @@
 import { ReactNode } from "react";
+import Link from "next/link";
 
-
-export default function CardItemButtonHighlighted({
+export default function CardItemLinkHighlighted({
     children,
-    onSelect
+    href,
 }: {
-    children: ReactNode;
-    onSelect: () => void;
+    children: ReactNode,
+    href: string,
 }) {
     return (
-        <button
+        <Link
             className={`
                 px-5 py-3 group w-full
-                flex flex-col items-center justify-between
+                flex items-center justify-between
                 bg-white/20
                 rounded-xl
     
@@ -26,9 +26,9 @@ export default function CardItemButtonHighlighted({
                 active:translate-y-0
                 active:shadow-[0_2px_6px_rgba(0,0,0,0.25)]
             `}
-            onClick={onSelect}
+            href={href}
         >
             {children}
-        </button>
-    )
+        </Link>
+    );
 }

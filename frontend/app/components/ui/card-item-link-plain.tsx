@@ -6,7 +6,7 @@ type CardItemButtonPlainProps = {
     href: string;
 }
 
-export default function CardItemButtonPlain({
+export default function CardItemLinkPlain({
     children,
     href,
 }: CardItemButtonPlainProps) {

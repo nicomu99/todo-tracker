@@ -1,18 +1,20 @@
-import CardItemButtonPlain from "@/components/ui/card-item-button-plain";
+import CardItemLinkPlain from "@/components/ui/card-item-link-plain";
 import { TaskList, useTasks } from "@/providers/task-provider";
+import { useParams } from "next/navigation";
 
 type TaskListItemButtonPlainProps = {
     taskList: TaskList;
 }
 
-export default function TasklistItemButtonPlain({ taskList }: TaskListItemButtonPlainProps) {
+export default function TasklistItemLinkPlain({ taskList }: TaskListItemButtonPlainProps) {
+    const { lang } = useParams();
     const { tasks } = useTasks();
     const listTasks = tasks.filter(
         task => task.taskListId === taskList.id && !task.completed
     )
 
     return (
-        <CardItemButtonPlain>
+        <CardItemLinkPlain href={`/${lang}/dashboard/task-lists/${taskList.id}`}>
             <div className="flex flex-row items-center gap-3">
                 <img
                     src="/flower-image.jpg"
@@ -35,6 +37,6 @@ export default function TasklistItemButtonPlain({ taskList }: TaskListItemButton
                 <p>{taskList.name}</p>
             </div>
             <p className={"text-text-muted font-light"}>{listTasks.length} open tasks</p>
-        </CardItemButtonPlain>
+        </CardItemLinkPlain>
     );
 }

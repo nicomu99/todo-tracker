@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { useAuth } from "@/providers/auth-provider";
 
@@ -65,6 +67,9 @@ type TaskContextType = {
     tasks: Task[];
     taskLists: TaskList[];
 
+    isLoadingTasks: boolean;
+    isLoadingTaskLists: boolean;
+
     loadTasks: () => Promise<void>;
     createTask: (task: TaskCreate) => Promise<void>;
     updateTask: (task: TaskUpdate) => Promise<void>;
@@ -80,8 +85,12 @@ const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
 export function TaskProvider({ children }: { children: ReactNode }) {
     const { accessToken } = useAuth();
+
     const [tasks, setTasks] = useState<Task[]>([]);
     const [taskLists, setTaskLists] = useState<TaskList[]>([]);
+
+    const [isLoadingTasks, setIsLoadingTasks] = useState<boolean>(true);
+    const [isLoadingTaskLists, setIsLoadingTaskLists] = useState<boolean>(true);
 
     async function createTask(task: TaskCreate) {
     }
@@ -112,6 +121,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
                     updatedDate: item.updated_at,
                 }))
             )
+            setIsLoadingTaskLists(false);
         } catch (error) {
             console.error(error);
             return;
@@ -147,6 +157,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
         );
 
         setTasks(allTasks.flat());
+        setIsLoadingTasks(false);
     }
 
     async function createTaskList(taskList: TaskListCreate) {
@@ -193,6 +204,8 @@ export function TaskProvider({ children }: { children: ReactNode }) {
             value={{
                 tasks,
                 taskLists,
+                isLoadingTasks,
+                isLoadingTaskLists,
                 loadTasks,
                 createTask,
                 updateTask,
