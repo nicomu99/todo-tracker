@@ -13,6 +13,7 @@ class Task(BaseModel):
     effort: PositiveInt = 0
     completed: bool
     due_date: datetime
+    created_at: datetime
 
 
 class TaskCreate(BaseModel):
@@ -21,11 +22,13 @@ class TaskCreate(BaseModel):
     description: str | None
     priority: PositiveInt = 0
     effort: PositiveInt = 0
+    due_date: datetime
 
 
 class TaskUpdate(BaseModel):
     task_list_id: int
     name: str | None = None
     description: str | None = None
-    priority: PositiveInt = 0
-    effort: PositiveInt = 0
+    priority: PositiveInt | None = None
+    effort: PositiveInt | None = None
+    due_date: datetime | None = None

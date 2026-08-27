@@ -17,7 +17,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 2,
                 "effort": 2,
                 "completed": True,
-                "due_date": datetime.now() - timedelta(days=2)
+                "due_date": datetime.now() - timedelta(days=2),
+                "created_at": datetime.now() - timedelta(days=3),
             }),
 
             1: Task(**{
@@ -28,7 +29,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 1,
                 "effort": 2,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=5) + timedelta(hours=13) + timedelta(minutes=15)
+                "due_date": datetime.now() + timedelta(days=5) + timedelta(hours=13) + timedelta(minutes=15),
+                "created_at": datetime.now() - timedelta(days=6),
             }),
 
             2: Task(**{
@@ -39,7 +41,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 3,
                 "effort": 1,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=8) + timedelta(hours=11) - timedelta(minutes=15)
+                "due_date": datetime.now() + timedelta(days=8) + timedelta(hours=11) - timedelta(minutes=15),
+                "created_at": datetime.now() - timedelta(days=1),
             }),
 
             3: Task(**{
@@ -50,7 +53,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 2,
                 "effort": 1,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=11) + timedelta(hours=4) - timedelta(minutes=20)
+                "due_date": datetime.now() + timedelta(days=11) + timedelta(hours=4) - timedelta(minutes=20),
+                "created_at": datetime.now() - timedelta(days=12),
             }),
 
             4: Task(**{
@@ -61,7 +65,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 2,
                 "effort": 1,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=14) + timedelta(hours=9) - timedelta(minutes=10)
+                "due_date": datetime.now() + timedelta(days=14) + timedelta(hours=9) - timedelta(minutes=10),
+                "created_at": datetime.now() - timedelta(days=8),
             }),
 
             5: Task(**{
@@ -72,7 +77,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 3,
                 "effort": 3,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=16) + timedelta(hours=2) - timedelta(minutes=6)
+                "due_date": datetime.now() + timedelta(days=16) + timedelta(hours=2) - timedelta(minutes=6),
+                "created_at": datetime.now() - timedelta(days=9),
             }),
 
             6: Task(**{
@@ -83,7 +89,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 3,
                 "effort": 3,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=19) - timedelta(hours=16) + timedelta(minutes=35)
+                "due_date": datetime.now() + timedelta(days=19) - timedelta(hours=16) + timedelta(minutes=35),
+                "created_at": datetime.now() - timedelta(days=5),
             }),
 
             7: Task(**{
@@ -94,7 +101,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 2,
                 "effort": 3,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=22) - timedelta(hours=3)
+                "due_date": datetime.now() + timedelta(days=22) - timedelta(hours=3),
+                "created_at": datetime.now() - timedelta(days=4),
             }),
 
             8: Task(**{
@@ -105,7 +113,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 3,
                 "effort": 3,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=25) + timedelta(hours=7)
+                "due_date": datetime.now() + timedelta(days=25) + timedelta(hours=7),
+                "created_at": datetime.now() - timedelta(days=2),
             }),
 
             9: Task(**{
@@ -116,7 +125,8 @@ class InMemoryTaskRepository(TaskRepository):
                 "priority": 2,
                 "effort": 3,
                 "completed": False,
-                "due_date": datetime.now() + timedelta(days=28) - timedelta(hours=7)
+                "due_date": datetime.now() + timedelta(days=28) - timedelta(hours=7),
+                "created_at": datetime.now() - timedelta(days=7),
             }),
         }
 
@@ -142,7 +152,8 @@ class InMemoryTaskRepository(TaskRepository):
             priority=task.priority,
             effort=task.effort,
             completed=False,
-            due_date=datetime.now()
+            due_date=task.due_date,
+            created_at=datetime.now(),
         )
         self.tasks[self.next_task_id] = new_task
         self.next_task_id += 1
