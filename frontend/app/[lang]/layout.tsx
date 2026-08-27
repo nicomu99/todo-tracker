@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 
 // TODO: Look at metadata
 // TODO: Style delete/edit button
-// TODO: Add task list update view
 // TODO: Add task list delete button
+// TODO: Breadcrumbs show task list name
 
 export default async function RootLayout({children, params}: LayoutProps<"/[lang]">) {
     const {lang} = await params;

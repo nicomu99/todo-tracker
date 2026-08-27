@@ -66,7 +66,7 @@ type TaskListCreate = {
     description: string;
 }
 
-type TaskListUpdate = {
+export type TaskListUpdate = {
     name?: string;
     description?: string;
 }
@@ -85,7 +85,7 @@ type TaskContextType = {
 
     loadTaskLists: () => Promise<void>;
     createTaskList: (taskList: TaskListCreate) => Promise<TaskList>;
-    updateTaskList: (taskList: TaskListUpdate) => Promise<void>;
+    updateTaskList: (taskListId: number, taskList: TaskListUpdate) => Promise<TaskList>;
     deleteTaskList: (taskListId: number) => Promise<void>;
 }
 
@@ -273,7 +273,37 @@ export function TaskProvider({ children }: { children: ReactNode }) {
         return createdTaskList;
     }
 
-    async function updateTaskList(taskList: TaskListUpdate) {
+    async function updateTaskList(taskListId: number, taskList: TaskListUpdate) {
+        const response = await fetch(`http://localhost:8000/task-lists/${taskListId}`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskList),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update task list");
+        }
+
+        const updatedTaskList: TaskListResponse = await response.json();
+        const newTaskList: TaskList = {
+            id: updatedTaskList.id,
+            name: updatedTaskList.name,
+            description: updatedTaskList.description ?? "",
+            createdDate: new Date(updatedTaskList.created_at),
+            updatedDate: new Date(updatedTaskList.updated_at),
+        }
+        setTaskLists(prevTaskLists =>
+            prevTaskLists.map(taskList =>
+                taskList.id === newTaskList.id
+                    ? newTaskList
+                    : taskList
+            )
+        );
+
+        return newTaskList;
     }
 
     async function deleteTaskList(taskListId: number) {

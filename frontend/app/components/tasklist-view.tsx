@@ -4,16 +4,18 @@ import { useTasks } from "@/providers/task-provider";
 import CardIcon from "@/components/ui/card-icon";
 import TaskListIcon from "@/icons/tasklist-icon";
 import PageTitle from "@/components/ui/page-title";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import TasklistItemDetail from "@/components/ui/task-list-item-detail";
 import { useState } from "react";
 import CreateTaskView from "@/components/ui/create-task-view";
+import Link from "next/link";
 
 export default function TaskListView({
     slug,
 }: {
     slug: string;
 }) {
+    const { lang } = useParams();
     const { taskLists, tasks, isLoadingTasks, isLoadingTaskLists } = useTasks();
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
 
@@ -43,6 +45,9 @@ export default function TaskListView({
                 <PageTitle>
                     {taskList.name}
                 </PageTitle>
+                <Link href={`/${lang}/dashboard/task-lists/${taskList.id}/edit`}>
+                    Edit
+                </Link>
                 <div
                     className="
                         w-10 h-10 ml-auto mr-8
