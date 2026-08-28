@@ -307,6 +307,22 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
 
     async function deleteTaskList(taskListId: number) {
+        const response = await fetch(`http://localhost:8000/task-lists/${taskListId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete task list");
+        }
+
+        setTaskLists(previous =>
+            previous.filter(taskList =>
+                taskList.id !== taskListId
+            )
+        );
     }
 
     useEffect(() => {

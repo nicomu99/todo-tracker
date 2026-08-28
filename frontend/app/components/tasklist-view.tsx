@@ -4,11 +4,12 @@ import { useTasks } from "@/providers/task-provider";
 import CardIcon from "@/components/ui/card-icon";
 import TaskListIcon from "@/icons/tasklist-icon";
 import PageTitle from "@/components/ui/page-title";
-import { notFound, useParams } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import TasklistItemDetail from "@/components/ui/task-list-item-detail";
 import { useState } from "react";
 import CreateTaskView from "@/components/ui/create-task-view";
 import Link from "next/link";
+import ErrorMessageView from "@/components/ui/error-message-view";
 
 export default function TaskListView({
     slug,
@@ -16,8 +17,10 @@ export default function TaskListView({
     slug: string;
 }) {
     const { lang } = useParams();
-    const { taskLists, tasks, isLoadingTasks, isLoadingTaskLists } = useTasks();
+    const router = useRouter();
+    const { taskLists, tasks, isLoadingTasks, isLoadingTaskLists, deleteTaskList } = useTasks();
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const taskList = taskLists.find(
         (list) => list.id === Number(slug),
@@ -36,7 +39,22 @@ export default function TaskListView({
         notFound();
     }
 
-    return (
+    async function handleDelete() {
+        try {
+            if (!taskList) {
+                setErrorMessage("Could not delete task list.");
+                return;
+            }
+
+            await deleteTaskList(taskList.id);
+            router.replace(`/${lang}/dashboard/task-lists/`);
+        } catch {
+            setErrorMessage("Could not delete task list.");
+        }
+    }
+
+
+            return (
         <div>
             <div className="flex flex-row items-center gap-8 mb-8">
                 <CardIcon>
@@ -48,6 +66,9 @@ export default function TaskListView({
                 <Link href={`/${lang}/dashboard/task-lists/${taskList.id}/edit`}>
                     Edit
                 </Link>
+                <button onClick={handleDelete}>
+                    Delete
+                </button>
                 <div
                     className="
                         w-10 h-10 ml-auto mr-8
@@ -71,6 +92,9 @@ export default function TaskListView({
             </div>
             {showAddTaskModal && (
                 <CreateTaskView taskListId={taskList.id}/>
+            )}
+            {errorMessage && (
+                <ErrorMessageView error={errorMessage} />
             )}
             <div className="flex flex-col gap-3">
                 {taskListTasks.map((task) => (
