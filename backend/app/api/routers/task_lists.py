@@ -129,7 +129,7 @@ def update_task_list(
 
 @router.delete("/task-lists/{list_id}")
 def delete_task_list(
-    list_id,
+    list_id: int,
     task_service: Annotated[TaskService, Depends(get_task_service)],
     current_user: Annotated[User, Depends(get_current_active_user)],
 ) -> Response:
