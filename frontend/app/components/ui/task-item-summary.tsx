@@ -1,5 +1,7 @@
 import PriorityIndicator from "@/components/ui/priority-indicator";
 import { Task } from "@/providers/task-provider";
+import { EditButton } from "@/components/ui/edit-control";
+import { DeleteButton } from "@/components/ui/delete-button";
 
 export default function TaskItemSummary({
     task,
@@ -38,36 +40,33 @@ export default function TaskItemSummary({
                 </div>
             </div>
 
+            <PriorityIndicator priority={task.priority}/>
+
+
             <div className={"flex flex-row gap-3"}>
                 {showEditButton && (
-                    <button
+                    <EditButton
                         onClick={(event) => {
                             event.stopPropagation();
                             if (onClickEdit) {
                                 onClickEdit();
                             }
                         }}
-                        className={`w-20`}
-                    >
-                        Edit
-                    </button>
-                )}
-                {showDeleteButton && (
-                    <button
-                        onClick={(event) => {
-                            event.stopPropagation();
-                            if (onClickDelete) {
-                                onClickDelete(task.id);
-                            }
-                        }}
-                        className={`w-20`}
-                    >
-                        Delete
-                    </button>
-                )}
+                    />
+            )}
+            {showDeleteButton && (
+                <DeleteButton
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        if (onClickDelete) {
+                            onClickDelete(task.id);
+                        }
+                    }}
+                />
+            )}
 
-                <PriorityIndicator priority={task.priority}/>
-            </div>
         </div>
-    );
+</div>
+)
+    ;
 }

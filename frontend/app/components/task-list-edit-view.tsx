@@ -3,16 +3,20 @@
 import CheckIcon from "@/icons/check-icon";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
-import { SubmitEvent, useState } from "react";
+import { SubmitEvent, useEffect, useState } from "react";
 import { TaskListUpdate, useTasks } from "@/providers/task-provider";
 import { notFound } from "next/navigation";
 import ErrorMessageView from "@/components/ui/error-message-view";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
 
 export default function TaskListEditView({
     slug,
 }: {
     slug: string;
 }) {
+    const [name, setName] = useState<string>("");
+    const [description, setDescription] = useState<string>("");
+
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [successMessage, setSuccessMessage] = useState<string>("");
 
@@ -22,6 +26,13 @@ export default function TaskListEditView({
         (list) => list.id === Number(slug),
     );
 
+    useEffect(() => {
+        if (taskList) {
+            setName(taskList.name);
+            setDescription(taskList.description);
+        }
+    }, [taskList]);
+
     if (isLoadingTaskLists) {
         return <p>Loading...</p>;
     }
@@ -29,9 +40,6 @@ export default function TaskListEditView({
     if (!taskList) {
         notFound();
     }
-
-    const [name, setName] = useState<string>(taskList.name);
-    const [description, setDescription] = useState<string>(taskList.description);
 
 
     async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
@@ -56,7 +64,9 @@ export default function TaskListEditView({
     }
 
     return (
-        <div className="text-left py-3 px-5">
+        <div>
+            <Breadcrumbs labels={{[slug]: taskList.name}}/>
+
             {successMessage ?
                 <div className="flex flex-col items-center justify-center gap-5">
                     <CheckIcon className="text-positive" width="5em" height="5em"/>

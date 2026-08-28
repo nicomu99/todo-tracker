@@ -8,8 +8,10 @@ import { notFound, useParams, useRouter } from "next/navigation";
 import TasklistItemDetail from "@/components/ui/task-list-item-detail";
 import { useState } from "react";
 import CreateTaskView from "@/components/ui/create-task-view";
-import Link from "next/link";
 import ErrorMessageView from "@/components/ui/error-message-view";
+import Breadcrumbs from "@/components/ui/breadcrumbs";
+import { EditLink } from "@/components/ui/edit-control";
+import { DeleteButton } from "@/components/ui/delete-button";
 
 export default function TaskListView({
     slug,
@@ -56,6 +58,7 @@ export default function TaskListView({
 
             return (
         <div>
+            <Breadcrumbs labels={{[slug]: taskList.name}}/>
             <div className="flex flex-row items-center gap-8 mb-8">
                 <CardIcon>
                     <TaskListIcon width="2.5em" height="2.5em"/>
@@ -63,12 +66,8 @@ export default function TaskListView({
                 <PageTitle>
                     {taskList.name}
                 </PageTitle>
-                <Link href={`/${lang}/dashboard/task-lists/${taskList.id}/edit`}>
-                    Edit
-                </Link>
-                <button onClick={handleDelete}>
-                    Delete
-                </button>
+                <EditLink href={`/${lang}/dashboard/task-lists/${taskList.id}/edit`}/>
+                <DeleteButton onClick={handleDelete} />
                 <div
                     className="
                         w-10 h-10 ml-auto mr-8

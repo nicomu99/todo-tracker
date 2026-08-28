@@ -1,5 +1,4 @@
 import DashboardCard from "@/components/ui/dashboard-card";
-import Breadcrumbs from "@/components/ui/breadcrumbs";
 import TaskListEditView from "@/components/task-list-edit-view";
 
 export default async function EditPage({
@@ -12,7 +11,6 @@ export default async function EditPage({
     return (
         <div className="bg-background ml-74 mt-10 mr-10">
             <DashboardCard>
-                <Breadcrumbs labels={{[slug]: "List"}}/>
                 <TaskListEditView slug={slug}/>
             </DashboardCard>
         </div>
