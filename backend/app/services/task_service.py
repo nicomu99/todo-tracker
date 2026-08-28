@@ -224,6 +224,7 @@ class TaskService:
         deleted = self.task_list_repository.delete_task_list(list_id)
         if not deleted:
             raise TaskListNotFoundError(list_id)
+        self.task_repository.delete_tasks_by_list_id(list_id)
 
     def _get_task(self, task_id: int) -> Task:
         task = self.task_repository.get_task(task_id)

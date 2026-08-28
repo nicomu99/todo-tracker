@@ -91,3 +91,11 @@ class TaskRepository(ABC):
             True if a task was deleted, otherwise False.
         """
         ...
+
+    @abstractmethod
+    def delete_tasks_by_list_id(self, list_id: int) -> None:
+        """Delete all tasks from a particular task list.
+
+        Args:
+            list_id: The unique identifier of the task list.
+        """

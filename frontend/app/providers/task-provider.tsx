@@ -323,6 +323,12 @@ export function TaskProvider({ children }: { children: ReactNode }) {
                 taskList.id !== taskListId
             )
         );
+
+        setTasks(previous =>
+            previous.filter(task =>
+                task.taskListId !== taskListId
+            )
+        );
     }
 
     useEffect(() => {

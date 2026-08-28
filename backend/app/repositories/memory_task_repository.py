@@ -178,3 +178,8 @@ class InMemoryTaskRepository(TaskRepository):
             del self.tasks[task_id]
             return True
         return False
+
+    def delete_tasks_by_list_id(self, list_id: int) -> None:
+        self.tasks = {
+            key: value for key, value in self.tasks.items() if value.task_list_id != list_id
+        }
