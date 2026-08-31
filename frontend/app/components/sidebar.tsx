@@ -6,6 +6,7 @@ import DashboardIcon from "@/icons/dashboard-icon";
 import TaskListIcon from "@/icons/tasklist-icon";
 import { useParams } from "next/navigation";
 import SettingsIcon from "@/icons/settings-icon";
+import LogoutButton from "@/components/ui/logout-button";
 
 export default function Sidebar() {
     const { user } = useAuth();
@@ -14,7 +15,7 @@ export default function Sidebar() {
     return (
         <div className="
                 fixed left-0 top-0 h-full w-64
-                bg-surface border-r border-text-subtle
+                bg-surface border-r border-text-subtle z-40
             ">
             <div className="h-full flex flex-col p-5">
                 <div className="my-5">
@@ -38,6 +39,7 @@ export default function Sidebar() {
                             {user ? `@${user.username}` : "Empty"}
                         </p>
                     </div>
+                    <LogoutButton />
                 </div>
                 <DashboardLink link={`/${lang}/dashboard`} linkText="Dashboard" textClassName="translate-y-px" icon={<DashboardIcon/>}/>
                 <DashboardLink link={`/${lang}/dashboard/task-lists`} linkText="Task Lists" icon={<TaskListIcon/>}/>

@@ -49,13 +49,17 @@ class InMemoryUserRepository(UserRepository):
         self.next_user_id += 1
         return UserResponse(**user.model_dump())
 
-    def update_user(self, user_id: int, user: UserUpdate) -> UserResponse | None:
+    def update_user(self, user_id: int, user_update: UserUpdate, hashed_password: str | None = None) -> UserResponse | None:
         user = self.users.get(user_id)
         if user is None:
             return None
 
-        for key, value in user.model_dump(exclude_unset=True).items():
-            setattr(user, key, value)
+        for key, value in user_update.model_dump(exclude_unset=True).items():
+            if key != "password":
+                setattr(user, key, value)
+
+        if hashed_password is not None:
+            user.hashed_password = hashed_password
 
         return UserResponse(**user.model_dump())
 

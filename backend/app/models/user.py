@@ -23,7 +23,7 @@ class UserCreate(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    username: str
+    username: str | None = None
     password: str | None = None
     email: str | None = None
     full_name: str | None = None
@@ -33,3 +33,4 @@ class UserResponse(BaseModel):
     id: int
     username: str
     full_name: str
+    email: str

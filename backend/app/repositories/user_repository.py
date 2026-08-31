@@ -52,7 +52,7 @@ class UserRepository(ABC):
         ...
 
     @abstractmethod
-    def update_user(self, user_id: int, user: UserUpdate) -> UserResponse | None:
+    def update_user(self, user_id: int, user_update: UserUpdate, hashed_password: str | None = None) -> UserResponse | None:
         """Update an existing user.
 
         Only fields whose values are not None are updated. Fields set to None
@@ -60,7 +60,8 @@ class UserRepository(ABC):
 
         Args:
             user_id: The ID of the user to update.
-            user: Data used to update the user object.
+            user_update: Data used to update the user object.
+            hashed_password: The hashed new user password.
 
         Returns:
             The updated user, or None if no user with the given username exists.

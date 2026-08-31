@@ -66,7 +66,8 @@ class UserService:
             ForbiddenError: If the user is not authorized to perform this action.
         """
         self._check_user_id(user_id, active_user_id)
-        user_response = self.user_repository.update_user(user_id, user)
+        hashed_password = self.password_hasher.hash(user.password) if user.password else None
+        user_response = self.user_repository.update_user(user_id, user, hashed_password)
         if user_response is None:
             raise UserNotFoundError("The requested user does not exist.")
         return user_response
