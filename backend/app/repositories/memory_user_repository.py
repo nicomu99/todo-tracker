@@ -8,7 +8,7 @@ from app.models import User, UserCreate, UserUpdate, UserResponse
 
 class InMemoryUserRepository(UserRepository):
     def __init__(self) -> None:
-        self.next_user_id: int = 0
+        self.next_user_id: int = 1
         self.users: dict[int, User] = {
             0: User(**{
                 "id": 0,
@@ -47,7 +47,8 @@ class InMemoryUserRepository(UserRepository):
         )
         self.users[self.next_user_id] = new_user
         self.next_user_id += 1
-        return UserResponse(**user.model_dump())
+        print(self.users)
+        return UserResponse(**new_user.model_dump())
 
     def update_user(self, user_id: int, user_update: UserUpdate, hashed_password: str | None = None) -> UserResponse | None:
         user = self.users.get(user_id)

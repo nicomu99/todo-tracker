@@ -17,6 +17,13 @@ export type UserUpdate = {
     password?: string;
 }
 
+export type UserCreate = {
+    username: string;
+    password: string;
+    email: string;
+    full_name: string;
+}
+
 type AuthContextType = {
     user: User | null;
     accessToken: string | null;
@@ -27,6 +34,7 @@ type AuthContextType = {
     login: (username: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 
+    createProfile: (userCreate: UserCreate) => Promise<User>;
     updateProfile: (userId: number, userUpdate: UserUpdate) => Promise<User>;
 }
 
@@ -81,7 +89,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             });
 
             if (!response.ok) {
-                console.error("Something went wrong");
                 return;
             }
 
@@ -98,8 +105,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     async function logout() {
-        setUser(null);
-        setAccessToken(null);
+        try {
+            await fetch("http://localhost:8000/auth/logout/", {
+                method: "POST",
+                credentials: "include",
+            })
+        } finally {
+            setUser(null);
+            setAccessToken(null);
+        }
     }
 
     async function fetchAndSetUser(accessToken: string) {
@@ -128,6 +142,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             console.error(error);
             return;
         }
+    }
+
+    async function createProfile(userCreate: UserCreate) {
+        const response = await fetch("http://localhost:8000/users/", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userCreate),
+        })
+
+        if (!response.ok) {
+            throw new Error("Something went wrong");
+        }
+
+        const data = await response.json();
+        const newUser: User = {
+            id: data.id,
+            username: data.username,
+            fullName: data.full_name,
+            email: data.email,
+        }
+        setUser(newUser);
+        return newUser;
     }
 
     async function updateProfile(userId: number, userUpdate: UserUpdate) {
@@ -168,6 +207,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 invalidCredentialsError,
                 login,
                 logout,
+                createProfile,
                 updateProfile,
             }}
         >

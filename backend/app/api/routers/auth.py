@@ -49,3 +49,12 @@ def refresh_access_token(
     auth_service: Annotated[AuthenticationService, Depends(get_auth_service)],
 ) -> AccessToken:
     return auth_service.refresh_access_token(refresh_token)
+
+@router.post("/auth/logout/")
+def logout(response: Response):
+    response.delete_cookie(
+        key="refresh_token",
+        httponly=True,
+        secure=False,
+        samesite="lax"
+    )
