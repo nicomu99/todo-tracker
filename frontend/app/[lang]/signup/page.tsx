@@ -1,4 +1,3 @@
-import LoginCard from "@/components/login-card";
 import SignUpView from "@/components/sign-up-view";
 
 export default function SignUpPage() {
