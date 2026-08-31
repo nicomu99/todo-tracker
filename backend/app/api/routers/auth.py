@@ -1,7 +1,7 @@
 """Token routes."""
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Cookie, Response
+from fastapi import APIRouter, Depends, Cookie, Response, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
 from app.services import AuthenticationService
@@ -45,9 +45,14 @@ def login_for_access_token(
 
 @router.post("/auth/refresh/")
 def refresh_access_token(
-    refresh_token: Annotated[str, Cookie()],
     auth_service: Annotated[AuthenticationService, Depends(get_auth_service)],
+    refresh_token: Annotated[str | None, Cookie()] = None,
 ) -> AccessToken:
+    if refresh_token is None:
+        raise HTTPException(
+            status_code=401,
+            detail="No refresh token",
+        )
     return auth_service.refresh_access_token(refresh_token)
 
 @router.post("/auth/logout/")
