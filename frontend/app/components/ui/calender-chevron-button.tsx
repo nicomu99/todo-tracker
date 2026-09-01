@@ -14,7 +14,8 @@ export const CalenderChevronButton = ({
             type="submit"
             onClick={() => onSelect(1)}
             className={`
-                p-3 bg-white/10 rounded-full
+                w-12 h-12 p-2 bg-white/10 rounded-full
+                flex justify-center items-center
                 
                 transition-all duration-150
                 hover:cursor-pointer 

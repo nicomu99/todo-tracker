@@ -43,7 +43,7 @@ export default function Breadcrumbs({
     }
 
     return (
-        <div className="flex flex-row gap-2 capitalize px-4 pb-3">
+        <div className="flex flex-row gap-2 capitalize md:px-4 pb-3">
             {breadcrumbLinks.map((segments,
                 i) => {
                 const isLast = i === breadcrumbLinks.length - 1;

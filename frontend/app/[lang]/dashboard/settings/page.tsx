@@ -7,20 +7,17 @@ import SettingsView from "@/components/settings-view";
 
 export default function SettingsPage() {
     return (
-        <div className="bg-background ml-74 mt-10 mr-10">
-            <DashboardCard>
-                <Breadcrumbs />
-                <div className="flex flex-row items-center gap-8 mb-4">
-                    <CardIcon>
-                        <TaskListIcon width="2.5em" height="2.5em"/>
-                    </CardIcon>
-                    <PageTitle>
-                        Create Task List
-                    </PageTitle>
-                </div>
-                <SettingsView />
-            </DashboardCard>
-        </div>
-
+        <DashboardCard>
+            <Breadcrumbs/>
+            <div className="flex flex-row items-center gap-8 mb-4">
+                <CardIcon>
+                    <TaskListIcon width="2.5em" height="2.5em"/>
+                </CardIcon>
+                <PageTitle>
+                    Update Profile
+                </PageTitle>
+            </div>
+            <SettingsView/>
+        </DashboardCard>
     );
 }

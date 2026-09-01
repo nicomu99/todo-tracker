@@ -79,11 +79,11 @@ export default function SignUpView() {
 
     return (
         <div className="flex flex-1 flex-col gap-2 items-center">
-            <div className="flex flex-1 flex-col gap-3 justify-center items-start">
+            <div className="flex flex-1 flex-col gap-3 justify-center items-center w-full">
                 <div
                     className={`
                             flex flex-col gap-10 p-6 border bg-surface border-text-subtle
-                            backdrop-blur-lg w-md
+                            backdrop-blur-lg w-full md:max-w-md
                             shadow-[var(--shadow-x,0px)_var(--shadow-y,8px)_20px_-8px_rgba(104,104,111)]
                         `}>
                     <Logo/>

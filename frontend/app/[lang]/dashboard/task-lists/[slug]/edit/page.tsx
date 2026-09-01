@@ -9,10 +9,8 @@ export default async function EditPage({
     const { slug } = await params;
 
     return (
-        <div className="bg-background ml-74 mt-10 mr-10">
-            <DashboardCard>
-                <TaskListEditView slug={slug}/>
-            </DashboardCard>
-        </div>
+        <DashboardCard>
+            <TaskListEditView slug={slug}/>
+        </DashboardCard>
     );
 }

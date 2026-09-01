@@ -30,9 +30,9 @@ export default function DashboardLayout({
 
     return (
         <TaskProvider>
-            <div className="flex min-h-screen">
+            <div className="min-h-screen">
                 <Sidebar/>
-                <main className="flex-1">
+                <main className="flex-1 bg-background p-4 md:ml-74 md:mt-10 md:mr-10">
                     {children}
                 </main>
             </div>

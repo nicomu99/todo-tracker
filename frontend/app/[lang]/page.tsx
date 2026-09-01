@@ -17,10 +17,10 @@ export default function Home() {
     }, [user, router, lang])
 
     return (
-        <div className="flex flex-1 flex-row justify-center bg-background font-sans">
+        <div className="flex flex-1 flex-col md:flex-row justify-center bg-background p-4">
             <div
-                className="flex flex-1 justify-center items-center sm:items-center">
-                <div className="flex flex-col items-start justify-center gap-8 translate-y-32">
+                className="flex flex-1 justify-center items-center">
+                <div className="flex flex-col items-start justify-center gap-8">
                     <h1 className="max-w-xl text-6xl font-bold tracking-tight text-accent">
                         Small quests. Big progress.
                     </h1>
