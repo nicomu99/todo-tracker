@@ -4,18 +4,30 @@ import { useState, createContext, useContext, ReactNode, useEffect } from "react
 import { useRouter, useParams } from "next/navigation";
 
 type User = {
-    id: number
-    username: string
-    fullName: string
+    id: number;
+    username: string;
+    fullName: string;
+    email: string;
+}
+
+export type UserUpdate = {
+    username?: string;
+    password?: string;
+    email?: string;
+    full_name?: string;
 }
 
 type AuthContextType = {
-    user: User | null
-    accessToken: string | null
-    isLoading: boolean
-    invalidCredentialsError: string | null
-    login: (username: string, password: string) => Promise<void>
-    logout: () => Promise<void>
+    user: User | null;
+    accessToken: string | null;
+    isLoading: boolean;
+
+    invalidCredentialsError: string | null;
+    login: (username: string,
+        password: string) => Promise<void>;
+    logout: () => Promise<void>;
+
+    updateProfile: (data: UserUpdate) => Promise<User>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,7 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { lang } = useParams();
 
-    async function login(username: string, password: string) {
+    async function login(username: string,
+        password: string) {
         setInvalidCredentialsError(null);
 
         try {
@@ -109,12 +122,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 id: userData.id,
                 username: userData.username,
                 fullName: userData.full_name,
+                email: userData.email,
             };
             setUser(user);
         } catch (error) {
             console.error(error);
             return;
         }
+    }
+
+    async function updateProfile(user: UserUpdate) {
+        const response = await fetch(`http://localhost:8000/users/`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+        })
+
+        if (!response.ok) {
+            throw new Error("Could not update user profile");
+        }
+
+        const data = await response.json();
+        const userUpdate: User = {
+            id: data.id,
+            username: data.username,
+            fullName: data.full_name,
+            email: data.email,
+        }
+        setUser(userUpdate);
+        return userUpdate;
     }
 
     useEffect(() => {
@@ -130,6 +169,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 invalidCredentialsError,
                 login,
                 logout,
+                updateProfile,
             }}
         >
             {children}

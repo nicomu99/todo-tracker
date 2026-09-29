@@ -33,3 +33,4 @@ class UserResponse(BaseModel):
     id: int
     username: str
     full_name: str
+    email: str

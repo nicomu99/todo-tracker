@@ -57,7 +57,7 @@ export default function TaskListEditView({
 
         try {
             await updateTaskList(taskList.id, taskListUpdate);
-            setSuccessMessage("The task has been created successfully.");
+            setSuccessMessage("The task has been updated successfully.");
         } catch {
             setErrorMessage("Could not update task list.");
         }
