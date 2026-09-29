@@ -1,4 +1,6 @@
 """Authentication service."""
+import os
+from dotenv import load_dotenv
 from datetime import datetime, timedelta, timezone
 
 import jwt
@@ -18,10 +20,11 @@ class AuthenticationService:
         Args:
             user_repository: Repository used to retrieve user data.
         """
+        load_dotenv()
         self.user_repository = user_repository
         self.password_hasher = password_hasher
 
-        self.secret_key = "d7e7cbc526e6c8d6dfbe721c06ce6d1d4edbaef7bd2cdaf3a82359c480ea437c"
+        self.secret_key = os.getenv("SECRET_KEY")
         self.algorithm = "HS256"
         self.ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
