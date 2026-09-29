@@ -49,6 +49,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { lang } = useParams();
 
+    const url = process.env.NEXT_PUBLIC_API_URL
+
     async function login(username: string, password: string) {
         setInvalidCredentialsError(null);
 
@@ -57,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             body.append("username", String(username));
             body.append("password", String(password));
 
-            const response = await fetch("http://localhost:8000/auth/login/", {
+            const response = await fetch(`${url}/auth/login/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -83,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function restoreSession() {
         try {
-            const response = await fetch("http://localhost:8000/auth/refresh/", {
+            const response = await fetch(`${url}/auth/refresh/`, {
                 method: "POST",
                 credentials: "include",
             });
@@ -106,7 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function logout() {
         try {
-            await fetch("http://localhost:8000/auth/logout/", {
+            await fetch(`${url}/auth/logout/`, {
                 method: "POST",
                 credentials: "include",
             })
@@ -118,7 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function fetchAndSetUser(accessToken: string) {
         try {
-            const userEndpointResponse = await fetch("http://localhost:8000/users/", {
+            const userEndpointResponse = await fetch(`${url}/users/`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -145,7 +147,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     async function createProfile(userCreate: UserCreate) {
-        const response = await fetch("http://localhost:8000/users/", {
+        const response = await fetch(`${url}/users/`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -170,7 +172,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     async function updateProfile(userId: number, userUpdate: UserUpdate) {
-        const response = await fetch("http://localhost:8000/users/", {
+        const response = await fetch(`${url}/users/`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${accessToken}`,

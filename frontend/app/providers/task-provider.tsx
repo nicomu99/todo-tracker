@@ -100,8 +100,10 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     const [isLoadingTasks, setIsLoadingTasks] = useState<boolean>(true);
     const [isLoadingTaskLists, setIsLoadingTaskLists] = useState<boolean>(true);
 
+    const url = process.env.NEXT_PUBLIC_API_URL
+
     async function createTask(task: TaskCreate) {
-        const response = await fetch("http://localhost:8000/tasks/", {
+        const response = await fetch(`${url}/tasks/`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -135,7 +137,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
 
     async function updateTask(taskId: number, task: TaskUpdate) {
-        const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
+        const response = await fetch(`${url}/tasks/${taskId}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -172,7 +174,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
 
     async function deleteTask(taskId: number) {
-        const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
+        const response = await fetch(`${url}/tasks/${taskId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -192,7 +194,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
 
     async function loadTaskLists() {
         try {
-            const taskListResponse = await fetch("http://localhost:8000/task-lists/", {
+            const taskListResponse = await fetch(`${url}/task-lists/`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -220,7 +222,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     async function loadTasks() {
         const allTasks = await Promise.all(
             taskLists.map(async (taskList) => {
-                const response = await fetch(`http://localhost:8000/task-lists/${taskList.id}/tasks`, {
+                const response = await fetch(`${url}/task-lists/${taskList.id}/tasks`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -251,7 +253,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
 
     async function createTaskList(taskList: TaskListCreate) {
-        const response = await fetch("http://localhost:8000/task-lists/", {
+        const response = await fetch(`${url}/task-lists/`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -274,7 +276,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
 
     async function updateTaskList(taskListId: number, taskList: TaskListUpdate) {
-        const response = await fetch(`http://localhost:8000/task-lists/${taskListId}`, {
+        const response = await fetch(`${url}/task-lists/${taskListId}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -307,7 +309,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
 
     async function deleteTaskList(taskListId: number) {
-        const response = await fetch(`http://localhost:8000/task-lists/${taskListId}`, {
+        const response = await fetch(`${url}/task-lists/${taskListId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
