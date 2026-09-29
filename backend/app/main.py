@@ -1,13 +1,8 @@
 """Main entry point."""
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .config import settings
 from .api.routers import tasks, users, auth, task_lists
 from .exceptions import (
     TaskListNotFoundError,
@@ -32,15 +27,16 @@ from .api import (
 
 app = FastAPI()
 
-origins = os.getenv("ALLOWED_ORIGINS")
+origins = settings.allowed_origins
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins.split(","),
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+if origins:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins.split(","),
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 app.include_router(tasks.router)
 app.include_router(users.router)

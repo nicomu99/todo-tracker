@@ -1,9 +1,9 @@
 """Authentication service."""
-import os
 from datetime import datetime, timedelta, timezone
 
 import jwt
 
+from app.config import settings
 from app.models import AccessToken, TokenData, User
 from app.repositories import UserRepository
 from app.exceptions import IncorrectCredentialsError
@@ -22,7 +22,7 @@ class AuthenticationService:
         self.user_repository = user_repository
         self.password_hasher = password_hasher
 
-        self.secret_key = os.environ["SECRET_KEY"]
+        self.secret_key = settings.secret_key
         self.algorithm = "HS256"
         self.ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
