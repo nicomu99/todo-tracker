@@ -38,7 +38,7 @@ export default function CalenderOverview() {
                 </div>
             </div>
             <div>
-                <div className="flex flex-row items-center justify-center gap-6">
+                <div className="grid items-center grid-cols-[repeat(auto-fit,minmax(50px,1fr))] gap-2 md:gap-6">
                     <CalenderChevronButton onSelect={() => updateWeek(-1)}>
                         <ChevronBackwardIcon/>
                     </CalenderChevronButton>

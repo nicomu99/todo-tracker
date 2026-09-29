@@ -9,10 +9,8 @@ export default async function ListView({
     const { slug } = await params;
 
     return (
-        <div className="bg-background ml-74 mt-10 mr-10">
-            <DashboardCard>
-                <TaskListView slug={slug}/>
-            </DashboardCard>
-        </div>
+        <DashboardCard>
+            <TaskListView slug={slug}/>
+        </DashboardCard>
     );
 }

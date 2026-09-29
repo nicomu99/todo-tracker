@@ -1,4 +1,4 @@
-import Image from "next/image";
+import  Image from "next/image";
 import Logo from "@/icons/logo";
 import DashboardLink from "@/components/ui/dashboard-link";
 import { useAuth } from "@/providers/auth-provider";
@@ -6,6 +6,7 @@ import DashboardIcon from "@/icons/dashboard-icon";
 import TaskListIcon from "@/icons/tasklist-icon";
 import { useParams } from "next/navigation";
 import SettingsIcon from "@/icons/settings-icon";
+import LogoutButton from "@/components/ui/logout-button";
 
 export default function Sidebar() {
     const { user } = useAuth();
@@ -13,8 +14,8 @@ export default function Sidebar() {
 
     return (
         <div className="
-                fixed left-0 top-0 h-full w-64
-                bg-surface border-r border-text-subtle
+                md:fixed md:left-0 md:top-0 w-full md:w-64 md:h-full
+                bg-surface border-r border-text-subtle z-40
             ">
             <div className="h-full flex flex-col p-5">
                 <div className="my-5">
@@ -38,10 +39,13 @@ export default function Sidebar() {
                             {user ? `@${user.username}` : "Empty"}
                         </p>
                     </div>
+                    <LogoutButton />
                 </div>
-                <DashboardLink link={`/${lang}/dashboard`} linkText="Dashboard" textClassName="translate-y-px" icon={<DashboardIcon/>}/>
-                <DashboardLink link={`/${lang}/dashboard/task-lists`} linkText="Task Lists" icon={<TaskListIcon/>}/>
-                <DashboardLink link={`/${lang}/dashboard/settings`} linkText="Settings" className="mt-auto mb-10" icon={<SettingsIcon/>}/>
+                <div className="flex flex-1 flex-col gap-2 md:mb-10">
+                    <DashboardLink link={`/${lang}/dashboard`} linkText="Dashboard" textClassName="translate-y-px" icon={<DashboardIcon/>}/>
+                    <DashboardLink link={`/${lang}/dashboard/task-lists`} linkText="Task Lists" icon={<TaskListIcon/>}/>
+                    <DashboardLink link={`/${lang}/dashboard/settings`} linkText="Settings" className="md:mt-auto md:mb-16" icon={<SettingsIcon/>}/>
+                </div>
             </div>
         </div>
     );

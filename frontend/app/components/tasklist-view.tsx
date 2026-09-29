@@ -56,21 +56,27 @@ export default function TaskListView({
     }
 
 
-            return (
+    return (
         <div>
-            <Breadcrumbs labels={{[slug]: taskList.name}}/>
-            <div className="flex flex-row items-center gap-8 mb-8">
-                <CardIcon>
-                    <TaskListIcon width="2.5em" height="2.5em"/>
-                </CardIcon>
-                <PageTitle>
-                    {taskList.name}
-                </PageTitle>
-                <EditLink href={`/${lang}/dashboard/task-lists/${taskList.id}/edit`}/>
-                <DeleteButton onClick={handleDelete} />
-                <div
-                    className="
-                        w-10 h-10 ml-auto mr-8
+            <Breadcrumbs labels={{ [slug]: taskList.name }}/>
+            <div className="flex flex-col lg:flex-row gap-4 md:gap-8 mb-8">
+                <div className="flex-1 flex flex-row items-center">
+                    <CardIcon className="flex-none">
+                        <TaskListIcon className="w-8 h-8 md:w-10 md:h-10"/>
+                    </CardIcon>
+                    <div className="flex-1">
+                        <PageTitle>
+                            {taskList.name}
+                        </PageTitle>
+                    </div>
+                </div>
+
+                    <div className="flex-none flex flex-row gap-4 lg:gap-8 justify-center items-center lg:flex-row">
+                    <EditLink href={`/${lang}/dashboard/task-lists/${taskList.id}/edit`}/>
+                    <DeleteButton onClick={handleDelete}/>
+                    <div
+                        className="
+                        w-10 h-10 lg:ml-auto md:mr-8
                         flex items-center justify-center
                         border border-positive border-dashed rounded-full
                         transition-all duration-200
@@ -84,16 +90,17 @@ export default function TaskListView({
                         active:bg-positive
                         active:text-background
                     "
-                    onClick={() => setShowAddTaskModal(!showAddTaskModal)}
-                >
-                    +
+                        onClick={() => setShowAddTaskModal(!showAddTaskModal)}
+                    >
+                        +
+                    </div>
                 </div>
             </div>
             {showAddTaskModal && (
                 <CreateTaskView taskListId={taskList.id}/>
             )}
             {errorMessage && (
-                <ErrorMessageView error={errorMessage} />
+                <ErrorMessageView error={errorMessage}/>
             )}
             <div className="flex flex-col gap-3">
                 {taskListTasks.map((task) => (

@@ -3,8 +3,11 @@
 import { useState, MouseEvent, SubmitEvent } from "react";
 import { useAuth } from "@/providers/auth-provider";
 import Logo from "@/icons/logo";
+import { useParams } from "next/navigation";
 
 export default function LoginCard() {
+    const { lang } = useParams();
+
     const [highlightUserName, setHighlightUserName] = useState<boolean>(false);
     const [highlightPassword, setHighlightPassword] = useState<boolean>(false);
     const [usernameError, setUsernameError] = useState<string>("");
@@ -92,7 +95,7 @@ export default function LoginCard() {
                             Welcome back!
                         </h2>
                         <p className="text-sm text-center">
-                            Don't have an account? <a href="#" className="underline decoration-1">Create a new
+                            Don't have an account? <a href={`/${lang}/signup`} className="underline decoration-1">Create a new
                             account now.</a> We promise you will not regret it.
                         </p>
                         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -143,4 +146,4 @@ export default function LoginCard() {
             </div>
         </div>
     );
-}
+};

@@ -15,21 +15,20 @@ export default function TaskListPage() {
     const { lang } = useParams();
 
     return (
-        <div className="bg-background ml-74 mt-10 mr-10">
-            <DashboardCard>
-                <Breadcrumbs/>
-                <div className="flex flex-row items-center gap-8 mb-4">
-                    <CardIcon>
-                        <TaskListIcon width="2.5em" height="2.5em"/>
-                    </CardIcon>
-                    <PageTitle>
-                        Task List Overview
-                    </PageTitle>
-                </div>
-                <div className="divide-y divide-text-muted/40">
-                    <CardItemLinkPlain href={`/${lang}/dashboard/task-lists/new`}>
-                        <div className="flex flex-row items-center gap-3">
-                            <div className="
+        <DashboardCard>
+            <Breadcrumbs/>
+            <div className="flex flex-row items-center gap-8 mb-4">
+                <CardIcon>
+                    <TaskListIcon width="2.5em" height="2.5em"/>
+                </CardIcon>
+                <PageTitle>
+                    Task List Overview
+                </PageTitle>
+            </div>
+            <div className="divide-y divide-text-muted/40">
+                <CardItemLinkPlain href={`/${lang}/dashboard/task-lists/new`}>
+                    <div className="flex flex-row items-center gap-3">
+                        <div className="
                                 w-10 h-10
                                 flex items-center justify-center
                                 border border-accent border-dashed rounded-md
@@ -44,19 +43,18 @@ export default function TaskListPage() {
                                 group-active:bg-accent
                                 group-active:text-background
                             "
-                            >
-                                +
-                            </div>
-                            <p className="transition-colors duration-200 group-hover:text-accent-hover">
-                                Add new task list
-                            </p>
+                        >
+                            +
                         </div>
-                    </CardItemLinkPlain>
-                    {taskLists.map(item => (
-                        <TasklistItemLinkPlain key={item.id} taskList={item}/>
-                    ))}
-                </div>
-            </DashboardCard>
-        </div>
+                        <p className="transition-colors duration-200 group-hover:text-accent-hover">
+                            Add new task list
+                        </p>
+                    </div>
+                </CardItemLinkPlain>
+                {taskLists.map(item => (
+                    <TasklistItemLinkPlain key={item.id} taskList={item}/>
+                ))}
+            </div>
+        </DashboardCard>
     );
 }

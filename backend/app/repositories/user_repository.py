@@ -61,7 +61,7 @@ class UserRepository(ABC):
         Args:
             user_id: The ID of the user to update.
             user_update: Data used to update the user object.
-            hashed_password: The hashed password of the user.
+            hashed_password: The hashed new user password.
 
         Returns:
             The updated user, or None if no user with the given username exists.

@@ -18,7 +18,7 @@ export default function CalenderDay({ date, active, onSelect }: CalenderDayProps
             onClick={() => onSelect(date)}
             className={`
                 ${divStyling}
-                w-16 py-1
+                w-8 md:w-16 py-1
                 rounded-md
                 
                 transition-all duration-150

@@ -1,23 +1,8 @@
-"use client";
+import SignUpView from "@/components/sign-up-view";
 
-import { useEffect } from "react";
-import LoginCard from "@/components/login-card";
-import { useAuth } from "@/providers/auth-provider";
-import { useRouter, useParams } from "next/navigation";
-
-export default function Home() {
-    const { user } = useAuth();
-    const router = useRouter();
-    const { lang } = useParams();
-
-    useEffect(() => {
-        if (user) {
-            router.replace(`/${lang}/dashboard`)
-        }
-    }, [user, router, lang])
-
+export default function SignUpPage() {
     return (
-        <div className="flex flex-1 flex-col md:flex-row justify-center bg-background p-4">
+        <div className="flex flex-1 flex-col gap-8 md:flex-row justify-center bg-background p-4">
             <div
                 className="flex flex-1 justify-center items-center">
                 <div className="flex flex-col items-start justify-center gap-8">
@@ -30,7 +15,7 @@ export default function Home() {
                     </p>
                 </div>
             </div>
-            <LoginCard/>
+            <SignUpView/>
         </div>
     );
 }

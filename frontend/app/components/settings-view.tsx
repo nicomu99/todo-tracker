@@ -1,22 +1,22 @@
 "use client";
 
-import { SubmitEvent, useEffect, useState } from "react";
 import { useAuth, UserUpdate } from "@/providers/auth-provider";
-import Input from "@/components/ui/input";
+import { SubmitEvent, useEffect, useState } from "react";
 import CheckIcon from "@/icons/check-icon";
+import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import ErrorMessageView from "@/components/ui/error-message-view";
 
 export default function SettingsView() {
+    const { user, updateProfile } = useAuth();
+
     const [userName, setUserName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [fullName, setFullName] = useState<string>("");
 
-    const [errorMessage, setErrorMessage] = useState<string>("");
     const [successMessage, setSuccessMessage] = useState<string>("");
-
-    const { user, updateProfile } = useAuth();
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     useEffect(() => {
         if (user) {
@@ -31,21 +31,21 @@ export default function SettingsView() {
 
         const userUpdate: UserUpdate = {
             username: userName || undefined,
-            password: password || undefined,
             email: email || undefined,
-            full_name: fullName || undefined,
-        };
+            fullName: fullName || undefined,
+            password: password || undefined,
+        }
 
         if (!user) {
-            setErrorMessage("User could not be updated.");
+            setErrorMessage("Could not update user.");
             return;
         }
 
         try {
-            await updateProfile(userUpdate);
-            setSuccessMessage("The user has been updated.");
+            await updateProfile(user.id, userUpdate);
+            setSuccessMessage("User updated successfully.");
         } catch {
-            setErrorMessage("User could not be updated.");
+            setErrorMessage("Could not update user.");
         }
     }
 
@@ -59,41 +59,32 @@ export default function SettingsView() {
                     </p>
                 </div>
                 :
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-md">
+                <form
+                    className="flex flex-col gap-6 max-w-md"
+                    onSubmit={handleSubmit}
+                >
                     <Input
-                        name="username"
-                        title={"Username"}
-                        type="text"
-                        value={userName}
+                        name="username" title="Username" type="text" highlight={false} value={userName}
                         onChange={(event) => setUserName(event.target.value)}
                     />
                     <Input
-                        name="password"
-                        title={"Password"}
-                        type="password"
-                        placeholder="******"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                    />
-                    <Input
-                        name="email"
-                        title={"Email"}
-                        type="email"
-                        value={email}
+                        name="email" title="Email" type="email" value={email}
                         onChange={(event) => setEmail(event.target.value)}
                     />
                     <Input
-                        name="full-name"
-                        title={"Full Name"}
-                        type="text"
-                        value={fullName}
+                        name="password" title="Password" type="password" value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <Input
+                        name="full-name" title="Full Name" type="text" value={fullName}
                         onChange={(event) => setFullName(event.target.value)}
                     />
+
                     <Button>
                         Update User
                     </Button>
                     {errorMessage && (
-                        <ErrorMessageView error={errorMessage} />
+                        <ErrorMessageView error={errorMessage}/>
                     )}
                 </form>
             }

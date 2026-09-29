@@ -43,7 +43,7 @@ export default function TaskItemSummary({
             <PriorityIndicator priority={task.priority}/>
 
 
-            <div className={"flex flex-row gap-3"}>
+            <div className={"flex flex-col lg:flex-row gap-3"}>
                 {showEditButton && (
                     <EditButton
                         onClick={(event) => {
@@ -53,20 +53,19 @@ export default function TaskItemSummary({
                             }
                         }}
                     />
-            )}
-            {showDeleteButton && (
-                <DeleteButton
-                    onClick={(event) => {
-                        event.stopPropagation();
-                        if (onClickDelete) {
-                            onClickDelete(task.id);
-                        }
-                    }}
-                />
-            )}
+                )}
+                {showDeleteButton && (
+                    <DeleteButton
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            if (onClickDelete) {
+                                onClickDelete(task.id);
+                            }
+                        }}
+                    />
+                )}
 
+            </div>
         </div>
-</div>
-)
-    ;
+    );
 }

@@ -6,15 +6,22 @@ import { useRouter, useParams } from "next/navigation";
 type User = {
     id: number;
     username: string;
-    fullName: string;
     email: string;
+    fullName: string;
 }
 
 export type UserUpdate = {
     username?: string;
-    password?: string;
     email?: string;
-    full_name?: string;
+    fullName?: string;
+    password?: string;
+}
+
+export type UserCreate = {
+    username: string;
+    password: string;
+    email: string;
+    full_name: string;
 }
 
 type AuthContextType = {
@@ -23,11 +30,12 @@ type AuthContextType = {
     isLoading: boolean;
 
     invalidCredentialsError: string | null;
-    login: (username: string,
-        password: string) => Promise<void>;
+
+    login: (username: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 
-    updateProfile: (data: UserUpdate) => Promise<User>;
+    createProfile: (userCreate: UserCreate) => Promise<User>;
+    updateProfile: (userId: number, userUpdate: UserUpdate) => Promise<User>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -41,8 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { lang } = useParams();
 
-    async function login(username: string,
-        password: string) {
+    async function login(username: string, password: string) {
         setInvalidCredentialsError(null);
 
         try {
@@ -82,7 +89,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             });
 
             if (!response.ok) {
-                console.error("Something went wrong");
                 return;
             }
 
@@ -99,8 +105,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     async function logout() {
-        setUser(null);
-        setAccessToken(null);
+        try {
+            await fetch("http://localhost:8000/auth/logout/", {
+                method: "POST",
+                credentials: "include",
+            })
+        } finally {
+            setUser(null);
+            setAccessToken(null);
+        }
     }
 
     async function fetchAndSetUser(accessToken: string) {
@@ -131,29 +144,54 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }
 
-    async function updateProfile(user: UserUpdate) {
-        const response = await fetch(`http://localhost:8000/users/`, {
-            method: "PATCH",
+    async function createProfile(userCreate: UserCreate) {
+        const response = await fetch("http://localhost:8000/users/", {
+            method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(user),
+            body: JSON.stringify(userCreate),
         })
 
         if (!response.ok) {
-            throw new Error("Could not update user profile");
+            throw new Error("Something went wrong");
         }
 
         const data = await response.json();
-        const userUpdate: User = {
+        const newUser: User = {
             id: data.id,
             username: data.username,
             fullName: data.full_name,
             email: data.email,
         }
-        setUser(userUpdate);
-        return userUpdate;
+        setUser(newUser);
+        return newUser;
+    }
+
+    async function updateProfile(userId: number, userUpdate: UserUpdate) {
+        const response = await fetch("http://localhost:8000/users/", {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userUpdate),
+        })
+
+        if (!response.ok) {
+            throw new Error("Something went wrong, could not update user");
+        }
+
+        const data = await response.json();
+        const newUser: User = {
+            id: userId,
+            username: data.username,
+            email: data.email,
+            fullName: data.full_name,
+        }
+        setUser(newUser);
+        return newUser;
     }
 
     useEffect(() => {
@@ -169,6 +207,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 invalidCredentialsError,
                 login,
                 logout,
+                createProfile,
                 updateProfile,
             }}
         >
