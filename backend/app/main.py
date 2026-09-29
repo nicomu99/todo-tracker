@@ -30,6 +30,7 @@ app = FastAPI()
 origins = settings.allowed_origins
 
 if origins:
+    # noinspection bad-argument-type
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins.split(","),
